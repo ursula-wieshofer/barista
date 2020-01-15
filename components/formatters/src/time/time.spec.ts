@@ -22,14 +22,22 @@ import { DtTime } from './time';
 describe('DtTimePipe', () => {
   interface TestCase {
     input: number;
-    inputFormat: DtTimeUnit | undefined;
+    inputUnit: DtTimeUnit | undefined;
     output: string;
   }
 
   interface TestCaseToUnit {
     input: number;
-    inputFormat: DtTimeUnit | undefined;
-    toUnit: DtTimeUnit;
+    inputUnit: DtTimeUnit | undefined;
+    outputUnit: DtTimeUnit;
+    output: string;
+  }
+
+  interface TestCasePrecision {
+    input: number;
+    precision: string;
+    inputUnit: DtTimeUnit;
+    outputUnit: DtTimeUnit | undefined;
     output: string;
   }
 
@@ -43,90 +51,104 @@ describe('DtTimePipe', () => {
     [
       {
         input: 1,
-        inputFormat: undefined,
-        output: '1ms',
+        inputUnit: undefined,
+        output: '1 ms',
       },
       {
-        input: 12 * 30.4 * 24 * 60 * 60 * 1000 + 7,
-        inputFormat: undefined,
-        output: '1y',
+        input: 31540000000,
+        inputUnit: undefined,
+        output: '1 y',
       },
       {
-        input: 30.4 * 24 * 60 * 60 * 1000,
-        inputFormat: undefined,
-        output: '1mo',
+        input: 2629738737.72,
+        inputUnit: undefined,
+        output: '1 mo',
       },
       {
         input: 24 * 60 * 60 * 1000,
-        inputFormat: undefined,
-        output: '1d',
+        inputUnit: undefined,
+        output: '1 d',
       },
       {
         input: 1.5,
-        inputFormat: DtTimeUnit.MONTH,
-        output: '1mo 15d',
+        inputUnit: DtTimeUnit.MONTH,
+        output: '1 mo 15 d 4 h',
       },
       {
         input: 1.5,
-        inputFormat: DtTimeUnit.HOUR,
-        output: '1h 30min',
+        inputUnit: DtTimeUnit.HOUR,
+        output: '1 h 30 min',
       },
       {
         input: 1.5,
-        inputFormat: DtTimeUnit.MINUTE,
-        output: '1min 30s',
+        inputUnit: DtTimeUnit.MINUTE,
+        output: '1 min 30 s',
       },
       {
         input: 1.5,
-        inputFormat: DtTimeUnit.SECOND,
-        output: '1s 500ms',
+        inputUnit: DtTimeUnit.SECOND,
+        output: '1 s 500 ms',
       },
     ].forEach((testCase: TestCase) => {
-      it(`should display ${testCase.output} when input is ${testCase.input}`, () => {
+      it(`should display ${testCase.output} when input is ${testCase.input} and inputUnit is '${testCase.inputUnit}'`, () => {
         expect(
           pipe
-            .transform(testCase.input, testCase.inputFormat, undefined)
+            .transform(testCase.input, undefined, undefined, testCase.inputUnit)
             .toString()
             .trim(),
         ).toBe(testCase.output);
       });
     });
   });
-  describe('Transforming input with toUnit parameter set', () => {
+
+  describe('Transforming input with outputUnit parameter set', () => {
     [
       {
-        input: 1.234567,
-        inputFormat: DtTimeUnit.DAY,
-        toUnit: DtTimeUnit.SECOND,
-        output: '1d 5h 37min 46s',
+        input: 120,
+        inputUnit: DtTimeUnit.MINUTE,
+        outputUnit: DtTimeUnit.HOUR,
+        output: '2 h',
       },
       {
-        input: 1.234567,
-        inputFormat: DtTimeUnit.DAY,
-        toUnit: DtTimeUnit.HOUR,
-        output: '1d 5h',
+        input: 2,
+        inputUnit: DtTimeUnit.HOUR,
+        outputUnit: DtTimeUnit.MINUTE,
+        output: '120 min',
       },
       {
-        input: 1.234567,
-        inputFormat: DtTimeUnit.DAY,
-        toUnit: DtTimeUnit.MINUTE,
-        output: '1d 5h 37min',
+        input: 1600,
+        inputUnit: DtTimeUnit.MILLISECOND,
+        outputUnit: DtTimeUnit.SECOND,
+        output: '2 s',
       },
       {
-        input: 1.234567,
-        inputFormat: DtTimeUnit.DAY,
-        // should disregard at toUnit set higher than the inputUnit and output three time units
-        toUnit: DtTimeUnit.YEAR,
-        output: '1d 5h',
+        input: 1400,
+        inputUnit: DtTimeUnit.MILLISECOND,
+        outputUnit: DtTimeUnit.SECOND,
+        output: '1 s',
+      },
+      {
+        input: 400,
+        inputUnit: DtTimeUnit.MILLISECOND,
+        outputUnit: DtTimeUnit.SECOND,
+        output: '< 1 s',
+      },
+      {
+        input: 15,
+        inputUnit: DtTimeUnit.MINUTE,
+        outputUnit: DtTimeUnit.HOUR,
+        output: '< 1 h',
       },
     ].forEach((testCaseToUnit: TestCaseToUnit) => {
-      it(`should display ${testCaseToUnit.output} when input is ${testCaseToUnit.input} and toUnit is set to ${testCaseToUnit.toUnit}`, () => {
+      // tslint:disable-next-line: dt-no-focused-tests
+      it(`should display ${testCaseToUnit.output} when input is ${testCaseToUnit.input}, inputUnit is '${testCaseToUnit.inputUnit}' and outputUnit is '${testCaseToUnit.outputUnit}'`, () => {
         expect(
           pipe
             .transform(
               testCaseToUnit.input,
-              testCaseToUnit.inputFormat,
-              testCaseToUnit.toUnit,
+              undefined,
+              testCaseToUnit.outputUnit,
+              testCaseToUnit.inputUnit,
             )
             .toString()
             .trim(),
@@ -134,6 +156,138 @@ describe('DtTimePipe', () => {
       });
     });
   });
+
+  describe('Transform by precision mode', () => {
+    describe('Precision Mode: PRECISE', () => {
+      [
+        {
+          input: 500,
+          outputUnit: DtTimeUnit.SECOND,
+          inputUnit: DtTimeUnit.MILLISECOND,
+          precision: 'PRECISE',
+          output: '0.5 s',
+        },
+        {
+          input: 1.5,
+          outputUnit: DtTimeUnit.SECOND,
+          inputUnit: DtTimeUnit.MILLISECOND,
+          precision: 'PRECISE',
+          output: '0.0015 s',
+        },
+        {
+          input: 30000,
+          outputUnit: DtTimeUnit.MINUTE,
+          inputUnit: DtTimeUnit.MILLISECOND,
+          precision: 'PRECISE',
+          output: '0.5 min',
+        },
+        {
+          input: 135,
+          outputUnit: DtTimeUnit.SECOND,
+          inputUnit: DtTimeUnit.MINUTE,
+          precision: 'PRECISE',
+          output: '8100 s',
+        },
+        {
+          input: 720000,
+          outputUnit: DtTimeUnit.HOUR,
+          inputUnit: DtTimeUnit.MILLISECOND,
+          precision: 'PRECISE',
+          output: '0.2 h',
+        },
+        {
+          input: -720000,
+          outputUnit: DtTimeUnit.HOUR,
+          inputUnit: DtTimeUnit.MILLISECOND,
+          precision: 'PRECISE',
+          output: '-0.2 h',
+        },
+        {
+          input: -500,
+          outputUnit: DtTimeUnit.SECOND,
+          inputUnit: DtTimeUnit.MILLISECOND,
+          precision: 'PRECISE',
+          output: '-0.5 s',
+        },
+        {
+          input: 0,
+          outputUnit: DtTimeUnit.SECOND,
+          inputUnit: DtTimeUnit.MILLISECOND,
+          precision: 'PRECISE',
+          output: '0 s',
+        },
+      ].forEach((testCasePrecision: TestCasePrecision) => {
+        it(`should display ${testCasePrecision.output} when input is ${testCasePrecision.input}, inputUnit is '${testCasePrecision.inputUnit}', outputUnit is '${testCasePrecision.outputUnit}' and precision mode is ${testCasePrecision.precision}`, () => {
+          expect(
+            pipe
+              .transform(
+                testCasePrecision.input,
+                testCasePrecision.precision,
+                testCasePrecision.outputUnit,
+                testCasePrecision.inputUnit,
+              )
+              .toString()
+              .trim(),
+          ).toEqual(testCasePrecision.output);
+        });
+      });
+    });
+
+    describe('Precision Mode: CUSTOM (1-n)', () => {
+      [
+        {
+          input: 450305005,
+          outputUnit: undefined,
+          inputUnit: DtTimeUnit.MILLISECOND,
+          precision: '5',
+          output: '5 d 5 h 5 min 5 s 5 ms',
+        },
+        {
+          input: 450305005,
+          outputUnit: undefined,
+          inputUnit: DtTimeUnit.MILLISECOND,
+          precision: '4',
+          output: '5 d 5 h 5 min 5 s',
+        },
+        {
+          input: 450305005,
+          outputUnit: undefined,
+          inputUnit: DtTimeUnit.MILLISECOND,
+          precision: '3',
+          output: '5 d 5 h 5 min',
+        },
+        {
+          input: 450305005,
+          outputUnit: undefined,
+          inputUnit: DtTimeUnit.MILLISECOND,
+          precision: '2',
+          output: '5 d 5 h',
+        },
+        {
+          input: 450305005,
+          outputUnit: undefined,
+          inputUnit: DtTimeUnit.MILLISECOND,
+          precision: '1',
+          output: '5 d',
+        },
+      ].forEach((testCaseCustom: TestCasePrecision) => {
+        it(`should display ${testCaseCustom.output} when input is ${testCaseCustom.input}, inputUnit is '${testCaseCustom.inputUnit}', outputUnit is '${testCaseCustom.outputUnit}' and precision mode is '${testCaseCustom.precision}'`, () => {
+          expect(
+            pipe
+              .transform(
+                testCaseCustom.input,
+                testCaseCustom.precision,
+                testCaseCustom.outputUnit,
+                testCaseCustom.inputUnit,
+              )
+              .toString()
+              .trim(),
+          ).toEqual(testCaseCustom.output);
+        });
+      });
+    });
+  });
+
   describe('Empty Values / Invalid Values', () => {
     it(`should return '${NO_DATA}' for empty values`, () => {
       expect(pipe.transform('', undefined, undefined)).toEqual(NO_DATA);
@@ -152,20 +306,21 @@ describe('DtTimePipe', () => {
       expect(pipe.transform('123test', undefined, undefined)).toEqual(NO_DATA);
     });
   });
+
   describe('should handle 0 and negative numbers', () => {
     it('should handle 0', () => {
       expect(pipe.transform('0', undefined, undefined).toString()).toEqual(
-        '0 ms',
+        '< 1 ms',
       );
     });
     it('should handle -1', () => {
       expect(pipe.transform('-1', undefined, undefined).toString()).toEqual(
-        '0 ms',
+        '< 1 ms',
       );
     });
     it('should handle -123', () => {
       expect(pipe.transform('-123', undefined, undefined).toString()).toEqual(
-        '0 ms',
+        '< 1 ms',
       );
     });
   });

@@ -29,19 +29,28 @@ import { formatTime } from './time-formatter';
 })
 export class DtTime implements PipeTransform {
   /**
-   * @param input - The timevalue to be formatted to amount of time from years to nanoseconds
+   * @param duration The timevalue to be formatted to amount of time from years to nanoseconds
+   * @param formatMethod Configuration for formatting the output
+   * @param outputUnit dtTimeUnit | undefined value describing the unit to which it should format
+   * @param inputUnit dtTimeUnit value describing which unit the duration is in
    */
   // tslint:disable: no-any
   transform(
-    input: any,
+    duration: any,
+    formatMethod: string | undefined,
+    outputUnit: DtTimeUnit | undefined,
     inputUnit: DtTimeUnit = DtTimeUnit.MILLISECOND,
-    toUnit: DtTimeUnit | undefined,
   ): DtFormattedValue | string {
-    if (isEmpty(input)) {
+    if (isEmpty(duration)) {
       return NO_DATA;
     }
-    return isNumber(input)
-      ? formatTime(coerceNumberProperty(input), inputUnit, toUnit)
+    return isNumber(duration)
+      ? formatTime(
+          coerceNumberProperty(duration),
+          formatMethod,
+          outputUnit,
+          inputUnit,
+        )
       : NO_DATA;
   }
 }
