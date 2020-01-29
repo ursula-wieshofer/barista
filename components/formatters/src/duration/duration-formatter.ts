@@ -50,7 +50,7 @@ const CONVERSIONUNITS = 3;
  * @param outputUnit dtTimeUnit | undefined value describing the unit to which it should format e.g to seconds
  * @param inputUnit dtTimeUnit value describing which unit the duration is in
  */
-export function formatTime(
+export function formatDuration(
   duration: number,
   formatMethod: string | undefined,
   outputUnit: DtTimeUnit | undefined,

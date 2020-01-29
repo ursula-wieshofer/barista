@@ -21,13 +21,13 @@ import { isEmpty, isNumber } from '@dynatrace/barista-components/core';
 
 import { DtFormattedValue, NO_DATA } from '../formatted-value';
 import { DtTimeUnit } from '../unit';
-import { formatTime } from './time-formatter';
+import { formatDuration } from './duration-formatter';
 
 /** Pipe used to convert milliseconds to amount of time from years to nanoseconds */
 @Pipe({
-  name: 'dtTime',
+  name: 'dtDuration',
 })
-export class DtTime implements PipeTransform {
+export class DtDuration implements PipeTransform {
   /**
    * @param duration The timevalue to be formatted to amount of time from years to nanoseconds
    * @param formatMethod Configuration for formatting the output
@@ -45,7 +45,7 @@ export class DtTime implements PipeTransform {
       return NO_DATA;
     }
     return isNumber(duration)
-      ? formatTime(
+      ? formatDuration(
           coerceNumberProperty(duration),
           formatMethod,
           outputUnit,

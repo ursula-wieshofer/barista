@@ -42,9 +42,9 @@ The `dtRate` pipe provides a way to add a rate info to the value
 
 <ba-live-example name="DtExampleFormattersRate"></ba-live-example>
 
-### Time
+### Duration
 
-The `dtTime` pipe provides a way to format a input time to a timestamp
+The `dtDuration` pipe provides a way to format a input time to a timestamp
 
 <ba-live-example name="DtExampleFormattersTime"></ba-live-example>
 
@@ -136,11 +136,11 @@ from a previous pipe with a rate. The function takes the following parameters:
 | `input`    | `DtFormattedValue | number` |         | numeric value to be transformed by the pipe |
 | `rateUnit` | `DtRateUnit | string`       |         | rate unit                                   |
 
-### Time
+### Duration
 
-The `formatTime` function converts a number to a timestamp. Default behaviour
-will print the first available value/unit and only the next two descending
-units.
+The `formatDuration` function converts a number to a timestamp. Default
+behaviour will print the first available value/unit and only the next two
+descending units.
 
 **Formatting/Precision modes:**
 
@@ -153,7 +153,7 @@ units.
 | Name           | Type              | Default     | Description                                                  |
 | -------------- | ----------------- | ----------- | ------------------------------------------------------------ |
 | `input`        | `number`          | `ms`        | Numeric value to be transformed by the pipe                  |
-| `formatMethod` | `string | number` | `undefined` | Formatting/Precision mode controlling the output of the pipe |
+| `formatMethod` | `string | number` | `undefined` | Formatting/Precision mode configuring the output of the pipe |
 | `outputUnit`   | `DtTimeUnit`      | `undefined` | Which unit to transform the input to                         |
 | `inputUnit`    | `DtTimeUnit`      | `undefined` | Which timeunit is used for the input                         |
 

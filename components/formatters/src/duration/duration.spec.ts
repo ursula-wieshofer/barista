@@ -17,7 +17,7 @@
 // tslint:disable: no-magic-numbers
 import { NO_DATA } from '../formatted-value';
 import { DtTimeUnit } from '../unit';
-import { DtTime } from './time';
+import { DtDuration } from './duration';
 
 describe('DtTimePipe', () => {
   interface TestCase {
@@ -41,10 +41,10 @@ describe('DtTimePipe', () => {
     output: string;
   }
 
-  let pipe: DtTime;
+  let pipe: DtDuration;
 
   beforeEach(() => {
-    pipe = new DtTime();
+    pipe = new DtDuration();
   });
 
   describe('Transforming input', () => {
