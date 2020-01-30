@@ -14,11 +14,16 @@
  * limitations under the License.
  */
 
-export * from './platform-util';
-export * from './type-util';
-export * from './sanitize-svg';
-export * from './number-util';
-export * from './compare-util';
-export * from './zone-scheduler';
-export * from './stringify';
-export * from './color-util';
+import { isString } from './type-util';
+
+/**
+ * @internal
+ * Checks if the given value is a valid hexadecimal color value
+ * used e.g. in CSS. 3- and 6-digit values, starting with # are valid.
+ */
+export function _isValidColorHexValue(value: string): boolean {
+  return (
+    isString(value) &&
+    Boolean(value.match(/^#([a-fA-F0-9]{6}|[a-fA-F0-9]{3})$/))
+  );
+}

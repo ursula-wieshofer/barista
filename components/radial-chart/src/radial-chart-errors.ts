@@ -14,11 +14,12 @@
  * limitations under the License.
  */
 
-export * from './platform-util';
-export * from './type-util';
-export * from './sanitize-svg';
-export * from './number-util';
-export * from './compare-util';
-export * from './zone-scheduler';
-export * from './stringify';
-export * from './color-util';
+export function getDtRadialChartInvalidHexColorValueError(
+  value: string,
+): Error {
+  return Error(
+    `The given color "${value}" is not a valid hexadecimal value.` +
+      `Please prefix your value with a '#' and use 3- or 6-digit values` +
+      `(only containing numbers and letters from A-F).`,
+  );
+}

@@ -14,11 +14,6 @@
  * limitations under the License.
  */
 
-export * from './platform-util';
-export * from './type-util';
-export * from './sanitize-svg';
-export * from './number-util';
-export * from './compare-util';
-export * from './zone-scheduler';
-export * from './stringify';
-export * from './color-util';
+export * from './src/radial-chart-module';
+export * from './src/radial-chart-series';
+export * from './src/radial-chart';

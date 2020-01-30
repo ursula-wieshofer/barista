@@ -14,11 +14,13 @@
  * limitations under the License.
  */
 
-export * from './platform-util';
-export * from './type-util';
-export * from './sanitize-svg';
-export * from './number-util';
-export * from './compare-util';
-export * from './zone-scheduler';
-export * from './stringify';
-export * from './color-util';
+import { SafeStyle } from '@angular/platform-browser';
+
+export interface DtRadialChartRenderData {
+  name: string;
+  path: string;
+  color: string;
+  colorCustomProp: SafeStyle;
+  value: number;
+  ariaLabel: string;
+}
