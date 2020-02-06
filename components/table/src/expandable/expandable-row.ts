@@ -21,6 +21,8 @@ import {
   style,
   transition,
   trigger,
+  stagger,
+  query,
 } from '@angular/animations';
 import { coerceBooleanProperty } from '@angular/cdk/coercion';
 import { UniqueSelectionDispatcher } from '@angular/cdk/collections';
@@ -77,16 +79,23 @@ export class DtExpandableRowContent {}
         style({ height: '0px', minHeight: '0', visibility: 'hidden' }),
       ),
       state('expanded', style({ height: 'auto', visibility: 'visible' })),
-      transition(
-        'collapsed => expanded',
-        animate(
-          '225ms cubic-bezier(0.4, 0.0, 0.2, 1)',
-          keyframes([
-            style({ height: 'auto', visibility: 'hidden', offset: 0.95 }),
-            style({ height: 'auto', visibility: 'visible', offset: 1 }),
-          ]),
+      transition('collapsed => expanded', [
+        query(
+          ':leave',
+          [
+            stagger(1000, [
+              animate(
+                '225ms cubic-bezier(0.4, 0.0, 0.2, 1)',
+                keyframes([
+                  style({ height: 'auto', visibility: 'hidden', offset: 0.95 }),
+                  style({ height: 'auto', visibility: 'visible', offset: 1 }),
+                ]),
+              ),
+            ]),
+          ],
+          { optional: true },
         ),
-      ),
+      ]),
       transition(
         'expanded => collapsed',
         animate(
