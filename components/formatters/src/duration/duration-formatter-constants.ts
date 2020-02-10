@@ -16,11 +16,6 @@
 
 import { DtTimeUnit } from '../unit';
 
-// export enum DurationMode {
-//   DEFAULT = 'DEFAULT',
-//   PRECISE = 'PRECISE',
-// }
-
 export type DurationMode = 'DEFAULT' | 'PRECISE' | number;
 
 export function toDurationMode(

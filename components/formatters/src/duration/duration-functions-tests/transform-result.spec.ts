@@ -46,162 +46,162 @@ describe('DtDurationFormatter', () => {
         ],
         displayedOutPut: '1 ms',
       },
-      // {
-      //   duration: 1,
-      //   inputUnit: DtTimeUnit.MILLISECOND,
-      //   formatMethod: "DEFAULT",
-      //   outPut: [
-      //     {
-      //       timeUnit: DtTimeUnit.MILLISECOND,
-      //       duration: '1',
-      //     },
-      //   ],
-      //   displayedOutPut: "1 ms",
-      // },
-      // {
-      //   duration: 1500,
-      //   inputUnit: DtTimeUnit.MILLISECOND,
-      //   formatMethod: "DEFAULT",
-      //   outPut: [
-      //     {
-      //       timeUnit: DtTimeUnit.SECOND,
-      //       duration: '1',
-      //     },
-      //     {
-      //       timeUnit: DtTimeUnit.MILLISECOND,
-      //       duration: '500',
-      //     },
-      //   ],
-      //   displayedOutPut: "1 s 500 ms",
-      // },
-      // {
-      //   duration: 61500,
-      //   inputUnit: DtTimeUnit.MILLISECOND,
-      //   formatMethod: "DEFAULT",
-      //   outPut: [
-      //     {
-      //       timeUnit: DtTimeUnit.MINUTE,
-      //       duration: '1',
-      //     },
-      //     {
-      //       timeUnit: DtTimeUnit.SECOND,
-      //       duration: '1',
-      //     },
-      //     {
-      //       timeUnit: DtTimeUnit.MILLISECOND,
-      //       duration: '500',
-      //     },
-      //   ],
-      //   displayedOutPut: "1 min 1 s 500 ms",
-      // },
-      // {
-      //   duration: 3601500,
-      //   inputUnit: DtTimeUnit.MILLISECOND,
-      //   formatMethod: "DEFAULT",
-      //   outPut: [
-      //     {
-      //       timeUnit: DtTimeUnit.HOUR,
-      //       duration: '1',
-      //     },
-      //     {
-      //       timeUnit: DtTimeUnit.SECOND,
-      //       duration: '1',
-      //     },
-      //   ],
-      //   displayedOutPut: "1 h 1 s",
-      // },
-      // {
-      //   duration: 123456789,
-      //   inputUnit: DtTimeUnit.MILLISECOND,
-      //   formatMethod: "DEFAULT",
-      //   outPut: [
-      //     {
-      //       timeUnit: DtTimeUnit.DAY,
-      //       duration: "1"
-      //     },
-      //     {
-      //       timeUnit: DtTimeUnit.HOUR,
-      //       duration: "10"
-      //     },
-      //     {
-      //       timeUnit: DtTimeUnit.MINUTE,
-      //       duration: "17"
-      //     }
-      //   ],
-      //   displayedOutPut: "1 d 10 h 17 min",
-      // },
-      // {
-      //   duration: 12.5,
-      //   inputUnit: DtTimeUnit.HOUR,
-      //   formatMethod: "DEFAULT",
-      //   outPut: [
-      //     {
-      //       timeUnit: DtTimeUnit.HOUR,
-      //       duration: "12"
-      //     },
-      //     {
-      //       timeUnit: DtTimeUnit.MINUTE,
-      //       duration: "30"
-      //     }
-      //   ],
-      //   displayedOutPut: "12 h 30 min",
-      // },
-      // {
-      //   duration: 10.111,
-      //   inputUnit: DtTimeUnit.DAY,
-      //   formatMethod: "DEFAULT",
-      //   outPut: [
-      //     {
-      //       timeUnit: DtTimeUnit.DAY,
-      //       duration: "10"
-      //     },
-      //     {
-      //       timeUnit: DtTimeUnit.HOUR,
-      //       duration: "2"
-      //     }
-      //   ],
-      //   displayedOutPut: "10 d 2 h",
-      // },
-      // {
-      //   duration: 100000000.1,
-      //   inputUnit: DtTimeUnit.MILLISECOND,
-      //   formatMethod: "DEFAULT",
-      //   outPut: [
-      //     {
-      //       timeUnit: DtTimeUnit.DAY,
-      //       duration: '1',
-      //     },
-      //   ],
-      //   displayedOutPut: "1 d"
-      // },
-      // {
-      //   duration: 0.000001,
-      //   inputUnit: DtTimeUnit.MILLISECOND,
-      //   formatMethod: "DEFAULT",
-      //   outPut: [
-      //     {
-      //       timeUnit: DtTimeUnit.NANOSECOND,
-      //       duration: '1',
-      //     },
-      //   ],
-      //   displayedOutPut: "1 ns"
-      // },
-      // {
-      //   duration: 0.001010,
-      //   inputUnit: DtTimeUnit.MILLISECOND,
-      //   formatMethod: "DEFAULT",
-      //   outPut: [
-      //     {
-      //       timeUnit: DtTimeUnit.MICROSECOND,
-      //       duration: '1',
-      //     },
-      //     {
-      //       timeUnit: DtTimeUnit.NANOSECOND,
-      //       duration: '1',
-      //     },
-      //   ],
-      //   displayedOutPut: "1 µs 1 ns"
-      // },
+      {
+        duration: 1,
+        inputUnit: DtTimeUnit.MILLISECOND,
+        formatMethod: 'DEFAULT',
+        outPut: [
+          {
+            timeUnit: DtTimeUnit.MILLISECOND,
+            duration: '1',
+          },
+        ],
+        displayedOutPut: '1 ms',
+      },
+      {
+        duration: 1500,
+        inputUnit: DtTimeUnit.MILLISECOND,
+        formatMethod: 'DEFAULT',
+        outPut: [
+          {
+            timeUnit: DtTimeUnit.SECOND,
+            duration: '1',
+          },
+          {
+            timeUnit: DtTimeUnit.MILLISECOND,
+            duration: '500',
+          },
+        ],
+        displayedOutPut: '1 s 500 ms',
+      },
+      {
+        duration: 61500,
+        inputUnit: DtTimeUnit.MILLISECOND,
+        formatMethod: 'DEFAULT',
+        outPut: [
+          {
+            timeUnit: DtTimeUnit.MINUTE,
+            duration: '1',
+          },
+          {
+            timeUnit: DtTimeUnit.SECOND,
+            duration: '1',
+          },
+          {
+            timeUnit: DtTimeUnit.MILLISECOND,
+            duration: '500',
+          },
+        ],
+        displayedOutPut: '1 min 1 s 500 ms',
+      },
+      {
+        duration: 3601500,
+        inputUnit: DtTimeUnit.MILLISECOND,
+        formatMethod: 'DEFAULT',
+        outPut: [
+          {
+            timeUnit: DtTimeUnit.HOUR,
+            duration: '1',
+          },
+          {
+            timeUnit: DtTimeUnit.SECOND,
+            duration: '1',
+          },
+        ],
+        displayedOutPut: '1 h 1 s',
+      },
+      {
+        duration: 123456789,
+        inputUnit: DtTimeUnit.MILLISECOND,
+        formatMethod: 'DEFAULT',
+        outPut: [
+          {
+            timeUnit: DtTimeUnit.DAY,
+            duration: '1',
+          },
+          {
+            timeUnit: DtTimeUnit.HOUR,
+            duration: '10',
+          },
+          {
+            timeUnit: DtTimeUnit.MINUTE,
+            duration: '17',
+          },
+        ],
+        displayedOutPut: '1 d 10 h 17 min',
+      },
+      {
+        duration: 12.5,
+        inputUnit: DtTimeUnit.HOUR,
+        formatMethod: 'DEFAULT',
+        outPut: [
+          {
+            timeUnit: DtTimeUnit.HOUR,
+            duration: '12',
+          },
+          {
+            timeUnit: DtTimeUnit.MINUTE,
+            duration: '30',
+          },
+        ],
+        displayedOutPut: '12 h 30 min',
+      },
+      {
+        duration: 10.111,
+        inputUnit: DtTimeUnit.DAY,
+        formatMethod: 'DEFAULT',
+        outPut: [
+          {
+            timeUnit: DtTimeUnit.DAY,
+            duration: '10',
+          },
+          {
+            timeUnit: DtTimeUnit.HOUR,
+            duration: '2',
+          },
+        ],
+        displayedOutPut: '10 d 2 h',
+      },
+      {
+        duration: 100000000.1,
+        inputUnit: DtTimeUnit.MILLISECOND,
+        formatMethod: 'DEFAULT',
+        outPut: [
+          {
+            timeUnit: DtTimeUnit.DAY,
+            duration: '1',
+          },
+        ],
+        displayedOutPut: '1 d',
+      },
+      {
+        duration: 0.000001,
+        inputUnit: DtTimeUnit.MILLISECOND,
+        formatMethod: 'DEFAULT',
+        outPut: [
+          {
+            timeUnit: DtTimeUnit.NANOSECOND,
+            duration: '1',
+          },
+        ],
+        displayedOutPut: '1 ns',
+      },
+      {
+        duration: 0.001001,
+        inputUnit: DtTimeUnit.MILLISECOND,
+        formatMethod: 'DEFAULT',
+        outPut: [
+          {
+            timeUnit: DtTimeUnit.MICROSECOND,
+            duration: '1',
+          },
+          {
+            timeUnit: DtTimeUnit.NANOSECOND,
+            duration: '1',
+          },
+        ],
+        displayedOutPut: '1 µs 1 ns',
+      },
     ].forEach((testCase: TestCase) => {
       // tslint:disable-next-line: dt-no-focused-tests
       it.only(`Duration '${testCase.duration}', input unit '${testCase.inputUnit}' should equal to '${testCase.displayedOutPut}'`, () => {
