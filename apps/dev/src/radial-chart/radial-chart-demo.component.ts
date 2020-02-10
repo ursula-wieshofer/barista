@@ -18,8 +18,8 @@ import { Component } from '@angular/core';
 
 interface DemoChartData {
   name: string;
-  color?: string;
   value: number;
+  color?: string | null;
 }
 @Component({
   selector: 'radial-chart-demo',
@@ -92,7 +92,7 @@ export class RadialChartDemo {
     const colorIdx = Math.floor(Math.random() * this.randomColors.length);
     const newSeries = {
       name: 'Series',
-      color: this.randomizeColors ? this.randomColors[colorIdx] : undefined,
+      color: this.randomizeColors ? this.randomColors[colorIdx] : null,
       value,
     };
     this.allSeries.push(newSeries);

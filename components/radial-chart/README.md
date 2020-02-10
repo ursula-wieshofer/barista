@@ -1,13 +1,19 @@
 # Radial chart
 
+<ba-ux-snippet name="radial-chart-intro"></ba-ux-snippet>
+
 The radial chart component is used to display one or more data series either as
 pie chart or donut chart.
 
 <!-- TODO: A pie chart is commonly used to ... -->
 
+<ba-ux-snippet name="radial-chart-pie"></ba-ux-snippet>
+
 <docs-source-example example="RadialChartDefaultPieExample"></docs-source-example>
 
 <!-- TODO: Use a donut chart when you want to display ... -->
+
+<ba-ux-snippet name="radial-chart-donut"></ba-ux-snippet>
 
 <docs-source-example example="RadialChartDefaultDonutExample"></docs-source-example>
 
@@ -25,11 +31,11 @@ class MyModule {}
 
 ## DtRadialChart inputs
 
-| Name       | Type              | Default | Description                                                                                                                        |
-| ---------- | ----------------- | ------- | ---------------------------------------------------------------------------------------------------------------------------------- |
-| `type`     | `'pie' | 'donut'` | `'pie'` | The chart type; can be either a pie chart or a donut chart.                                                                        |
-| `maxValue` | `number`          | `null`  | The maximum chart value that defines the full circle. If not set the maximum value is equal to the sum of all chart series values. |
-| `start`    | `number`          | `0`     | **Not yet implemented.** Where the series should start, default is 0 which is on top.                                              |
+| Name             | Type                 | Default | Description                                                                                                                        |
+| ---------------- | -------------------- | ------- | ---------------------------------------------------------------------------------------------------------------------------------- |
+| `type`           | `'pie' | 'donut'`    | `'pie'` | The chart type; can be either a pie chart or a donut chart.                                                                        |
+| `maxValue`       | `number`             | `null`  | The maximum chart value that defines the full circle. If not set the maximum value is equal to the sum of all chart series values. |
+| `legendPosition` | `'right' | 'bottom'` | `right` | Defines where the chart's legend is placed.                                                                                        |
 
 ### Max value
 

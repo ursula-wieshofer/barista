@@ -1,9 +1,9 @@
-<!-- <div class="dt-radial-chart-wrapper">
+<div class="dt-radial-chart-wrapper">
   <svg [attr.viewBox]="_viewBox" [attr.width]="_width">
     <svg:path
       *ngIf="_hasBackground"
-      fill="#f8f8f8"
       [attr.d]="_backgroundPath"
+      class="dt-radial-chart-background"
     ></svg:path>
     <svg:g
       dt-radial-chart-path
@@ -23,19 +23,4 @@
       <strong>{{ series.value }}</strong> {{ series.name }}
     </dt-legend-item>
   </dt-legend>
-</div> -->
-
-<svg [attr.viewBox]="_viewBox" [attr.width]="_width">
-  <svg:path
-    *ngIf="_hasBackground"
-    fill="#f8f8f8"
-    [attr.d]="_backgroundPath"
-  ></svg:path>
-  <svg:g
-    dt-radial-chart-path
-    *ngFor="let series of _renderData"
-    [series]="series"
-    [totalValue]="_totalSeriesValue"
-    [overlayTemplate]="_overlay"
-  ></svg:g>
-</svg>
+</div>

@@ -17,7 +17,6 @@
 import {
   Directive,
   Input,
-  SimpleChanges,
   OnChanges,
   OnDestroy,
   isDevMode,
@@ -31,25 +30,37 @@ import { getDtRadialChartInvalidHexColorValueError } from './radial-chart-errors
   exportAs: 'dtRadialChartSeries',
 })
 export class DtRadialChartSeries implements OnChanges, OnDestroy {
+  /** The series value (required) */
   @Input() value: number;
+
+  /** The series name (required) */
   @Input() name: string;
 
+  /**
+   * The series color value (optional)
+   * When not given our predefined chart colors are used.
+   */
   @Input()
-  get color(): string | undefined {
+  get color(): string | null {
     return this._color;
   }
-  set color(value: string | undefined) {
-    if (value !== undefined && !_isValidColorHexValue(value) && isDevMode()) {
+  set color(value: string | null) {
+    if (
+      value !== undefined &&
+      value !== null &&
+      !_isValidColorHexValue(value) &&
+      isDevMode()
+    ) {
       throw getDtRadialChartInvalidHexColorValueError(value);
     }
     this._color = value;
   }
-  private _color: string | undefined;
+  private _color: string | null = null;
 
-  /** @internal fires when value changes */
+  /** @internal fires when any internal state changes */
   _stateChanges = new BehaviorSubject<DtRadialChartSeries>(this);
 
-  ngOnChanges(_changes: SimpleChanges): void {
+  ngOnChanges(): void {
     this._stateChanges.next(this);
   }
 

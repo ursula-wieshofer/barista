@@ -57,5 +57,20 @@ describe('ColorUtil', () => {
       const value = '#00a1';
       expect(_isValidColorHexValue(value)).toBe(false);
     });
+
+    it('should fail for value: red (invalid value)', () => {
+      const value = 'red';
+      expect(_isValidColorHexValue(value)).toBe(false);
+    });
+
+    it("should fail for value: '' (empty string)", () => {
+      const value = '';
+      expect(_isValidColorHexValue(value)).toBe(false);
+    });
+
+    it('should fail for value: # abc123 (space between # and value)', () => {
+      const value = '# abc123';
+      expect(_isValidColorHexValue(value)).toBe(false);
+    });
   });
 });

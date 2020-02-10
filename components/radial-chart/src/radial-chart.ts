@@ -121,14 +121,13 @@ export class DtRadialChart implements AfterContentInit, OnDestroy {
   _renderData: DtRadialChartRenderData[] = [];
 
   /** @internal Destroy subject to clear subscriptions on component destroy. */
-  private readonly _destroy = new Subject<void>();
+  private readonly _destroy$ = new Subject<void>();
 
   /** @internal The chart's width based on the viewport width. */
   _width = 0;
 
   /** @internal The chart's radius. */
   get _radius(): number {
-    // tslint:disable-next-line: no-magic-numbers
     return this._width / 2;
   }
 
@@ -158,7 +157,6 @@ export class DtRadialChart implements AfterContentInit, OnDestroy {
    * Adjust the viewbox to center the circle.
    */
   get _viewBox(): string {
-    // tslint:disable-next-line: no-magic-numbers
     return `${-this._width / 2} ${-this._width / 2} ${this._width} ${
       this._width
     }`;
@@ -184,7 +182,6 @@ export class DtRadialChart implements AfterContentInit, OnDestroy {
      */
     this._radialChartSeries.changes
       .pipe(
-        takeUntil(this._destroy),
         switchMap(() =>
           this._radialChartSeries.length
             ? combineLatest(
@@ -192,6 +189,7 @@ export class DtRadialChart implements AfterContentInit, OnDestroy {
               )
             : of(null),
         ),
+        takeUntil(this._destroy$),
       )
       .subscribe((): void => {
         this._updateRenderData();
@@ -204,7 +202,7 @@ export class DtRadialChart implements AfterContentInit, OnDestroy {
       .change()
       .pipe(
         startWith(null),
-        takeUntil(this._destroy),
+        takeUntil(this._destroy$),
       )
       .subscribe(() => {
         this._width = this._elementRef.nativeElement.getBoundingClientRect().width;
@@ -214,8 +212,8 @@ export class DtRadialChart implements AfterContentInit, OnDestroy {
 
   /** OnDestroy hook */
   ngOnDestroy(): void {
-    this._destroy.next();
-    this._destroy.complete();
+    this._destroy$.next();
+    this._destroy$.complete();
   }
 
   /**
@@ -242,7 +240,6 @@ export class DtRadialChart implements AfterContentInit, OnDestroy {
       this._hasBackground =
         isNumber(this.maxValue) && this._totalSeriesValue < this.maxValue!;
       this._backgroundPath =
-        // tslint:disable-next-line: no-magic-numbers
         generatePathData(this._radius, this._innerRadius, 0, Math.PI * 2) || '';
     } else {
       this._renderData = [];

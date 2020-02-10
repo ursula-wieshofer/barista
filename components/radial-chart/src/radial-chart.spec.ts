@@ -104,7 +104,7 @@ describe('DtRadialChart', () => {
     });
 
     describe('dt-radial-chart max value', () => {
-      const backgroundPathSelector = 'path[fill="#f8f8f8"]';
+      const backgroundPathSelector = '.dt-radial-chart-background';
 
       it('should not render a background when no maxValue is given for the chart', () => {
         const backgroundPath = chartSVG.querySelector(backgroundPathSelector);

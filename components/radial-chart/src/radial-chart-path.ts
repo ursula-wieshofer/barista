@@ -35,8 +35,27 @@ export interface DtRadialChartOverlayData {
 export class DtRadialChartPath
   extends DtOverlayTrigger<{ $implicit: DtRadialChartOverlayData }>
   implements AfterContentInit {
+  /**
+   * @internal
+   * All data needed to render the path that visualizes
+   * the given series.
+   */
   @Input() series: DtRadialChartRenderData;
+
+  /**
+   * @internal
+   * The sum of all series values.
+   * Needed to display this value as additional information
+   * in the overlay.
+   */
   @Input() totalValue: number;
+
+  /**
+   * @internal
+   * The template ref for the overlay template.
+   * Overlay is displayed when hovering over
+   * the chart series.
+   */
   @Input() overlayTemplate: TemplateRef<{
     $implicit: DtRadialChartOverlayData;
   }>;

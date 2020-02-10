@@ -14,6 +14,10 @@
  * limitations under the License.
  */
 
+/**
+ * Creates an error when the given color value is not a valid hex value
+ * with 3 or 6 digits starting with a # character.
+ */
 export function getDtRadialChartInvalidHexColorValueError(
   value: string,
 ): Error {
@@ -22,4 +26,12 @@ export function getDtRadialChartInvalidHexColorValueError(
       `Please prefix your value with a '#' and use 3- or 6-digit values` +
       `(only containing numbers and letters from A-F).`,
   );
+}
+
+/**
+ * Creates an error when the given max value for the radial chart
+ * is a negative number.
+ */
+export function getDtRadialChartInvalidMaxValueError(value: number): Error {
+  return Error(`The given maxValue "${value}" must not be negative.`);
 }

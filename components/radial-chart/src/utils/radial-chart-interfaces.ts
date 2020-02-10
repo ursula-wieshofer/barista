@@ -16,6 +16,12 @@
 
 import { SafeStyle } from '@angular/platform-browser';
 
+/**
+ * @internal
+ * Interface for the radial chart render data,
+ * i.e. all the data needed for creating the svg path
+ * and additional information like alternative text.
+ */
 export interface DtRadialChartRenderData {
   name: string;
   path: string;
