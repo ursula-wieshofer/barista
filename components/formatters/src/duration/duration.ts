@@ -22,6 +22,7 @@ import { isEmpty, isNumber } from '@dynatrace/barista-components/core';
 import { DtFormattedValue, NO_DATA } from '../formatted-value';
 import { DtTimeUnit } from '../unit';
 import { formatDuration } from './duration-formatter';
+import { DurationMode } from './duration-formatter-constants';
 
 /** Pipe used to convert milliseconds to amount of time from years to nanoseconds */
 @Pipe({
@@ -37,7 +38,7 @@ export class DtDuration implements PipeTransform {
   // tslint:disable: no-any
   transform(
     duration: any,
-    formatMethod: string | undefined,
+    formatMethod: DurationMode,
     outputUnit: DtTimeUnit | undefined,
     inputUnit: DtTimeUnit = DtTimeUnit.MILLISECOND,
   ): DtFormattedValue | string {

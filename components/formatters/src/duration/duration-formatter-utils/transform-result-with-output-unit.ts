@@ -33,7 +33,7 @@ export function dtTransformResultWithOutputUnit(
   duration: number,
   inputUnit: DtTimeUnit,
   outputUnit: DtTimeUnit | undefined,
-  formatMethod: string,
+  formatMethod: DurationMode,
 ): Map<DtTimeUnit, string> | undefined {
   let result = new Map<DtTimeUnit, string>();
   const conversionFactorKeys = Array.from(CONVERSION_FACTORS_TO_MS.keys());
@@ -53,11 +53,11 @@ export function dtTransformResultWithOutputUnit(
 
   if (outputUnit) {
     let factor = CONVERSION_FACTORS_TO_MS.get(outputUnit)!;
-    if (formatMethod === DurationMode.PRECISE) {
+    if (formatMethod === 'PRECISE') {
       amount = amount / factor;
       return result.set(outputUnit, amount.toString());
     } else {
-      amount = Math.round(amount / factor);
+      amount = Math.trunc(amount / factor);
       if (amount < 1) {
         return result.set(outputUnit, '< 1');
       }
@@ -67,7 +67,7 @@ export function dtTransformResultWithOutputUnit(
     return dtTransformResult(
       duration,
       inputUnit,
-      CONVERSION_FACTORS_TO_MS.size.toString(),
+      CONVERSION_FACTORS_TO_MS.size,
     );
   }
 }

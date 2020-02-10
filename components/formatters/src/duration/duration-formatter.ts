@@ -39,7 +39,7 @@ import {
  */
 export function formatDuration(
   duration: number,
-  formatMethod: string | undefined,
+  formatMethod: DurationMode,
   outputUnit: DtTimeUnit | undefined,
   inputUnit: DtTimeUnit = DtTimeUnit.MILLISECOND,
 ): DtFormattedValue | string {
@@ -50,7 +50,7 @@ export function formatDuration(
   let formattedData: FormattedData;
   let result: Map<DtTimeUnit, string> | undefined;
 
-  if (duration <= 0 && formatMethod !== DurationMode.PRECISE) {
+  if (duration <= 0 && formatMethod === 'DEFAULT') {
     // Smaller than 0 duration impossible
     return new DtFormattedValue(inputData, {
       transformedValue: inputData.input,
@@ -60,16 +60,16 @@ export function formatDuration(
     });
   } else {
     if (!formatMethod) {
-      formatMethod = DurationMode.DEFAULT;
+      formatMethod = 'DEFAULT';
     }
-    if (formatMethod === DurationMode.PRECISE) {
+    if (formatMethod === 'PRECISE') {
       result = dtTransformResultWithOutputUnit(
         duration,
         inputUnit,
         outputUnit,
         formatMethod,
       );
-    } else if (formatMethod === DurationMode.DEFAULT) {
+    } else if (formatMethod === 'DEFAULT') {
       if (outputUnit) {
         result = dtTransformResultWithOutputUnit(
           duration,

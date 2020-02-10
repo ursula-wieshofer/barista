@@ -35,7 +35,7 @@ describe('DtDurationPipe', () => {
 
   interface TestCasePrecision {
     input: number;
-    precision: string;
+    precision: string | number;
     inputUnit: DtTimeUnit;
     outputUnit: DtTimeUnit | undefined;
     output: string;
@@ -93,7 +93,7 @@ describe('DtDurationPipe', () => {
       it(`should display ${testCase.output} when input is ${testCase.input} and inputUnit is '${testCase.inputUnit}'`, () => {
         expect(
           pipe
-            .transform(testCase.input, undefined, undefined, testCase.inputUnit)
+            .transform(testCase.input, 'DEFAULT', undefined, testCase.inputUnit)
             .toString()
             .trim(),
         ).toBe(testCase.output);
@@ -119,7 +119,7 @@ describe('DtDurationPipe', () => {
         input: 1600,
         inputUnit: DtTimeUnit.MILLISECOND,
         outputUnit: DtTimeUnit.SECOND,
-        output: '2 s',
+        output: '1 s',
       },
       {
         input: 1400,
@@ -146,7 +146,7 @@ describe('DtDurationPipe', () => {
           pipe
             .transform(
               testCaseToUnit.input,
-              undefined,
+              'DEFAULT',
               testCaseToUnit.outputUnit,
               testCaseToUnit.inputUnit,
             )
@@ -222,7 +222,7 @@ describe('DtDurationPipe', () => {
             pipe
               .transform(
                 testCasePrecision.input,
-                testCasePrecision.precision,
+                'PRECISE',
                 testCasePrecision.outputUnit,
                 testCasePrecision.inputUnit,
               )
@@ -239,50 +239,52 @@ describe('DtDurationPipe', () => {
           input: 450305005,
           outputUnit: undefined,
           inputUnit: DtTimeUnit.MILLISECOND,
-          precision: '5',
+          precision: 5,
           output: '5 d 5 h 5 min 5 s 5 ms',
         },
         {
           input: 450305005,
           outputUnit: undefined,
           inputUnit: DtTimeUnit.MILLISECOND,
-          precision: '4',
+          precision: 4,
           output: '5 d 5 h 5 min 5 s',
         },
         {
           input: 450305005,
           outputUnit: undefined,
           inputUnit: DtTimeUnit.MILLISECOND,
-          precision: '3',
+          precision: 3,
           output: '5 d 5 h 5 min',
         },
         {
           input: 450305005,
           outputUnit: undefined,
           inputUnit: DtTimeUnit.MILLISECOND,
-          precision: '2',
+          precision: 2,
           output: '5 d 5 h',
         },
         {
           input: 450305005,
           outputUnit: undefined,
           inputUnit: DtTimeUnit.MILLISECOND,
-          precision: '1',
+          precision: 1,
           output: '5 d',
         },
       ].forEach((testCaseCustom: TestCasePrecision) => {
         it(`should display ${testCaseCustom.output} when input is ${testCaseCustom.input}, inputUnit is '${testCaseCustom.inputUnit}', outputUnit is '${testCaseCustom.outputUnit}' and precision mode is '${testCaseCustom.precision}'`, () => {
-          expect(
-            pipe
-              .transform(
-                testCaseCustom.input,
-                testCaseCustom.precision,
-                testCaseCustom.outputUnit,
-                testCaseCustom.inputUnit,
-              )
-              .toString()
-              .trim(),
-          ).toEqual(testCaseCustom.output);
+          if (typeof testCaseCustom.precision === 'number') {
+            expect(
+              pipe
+                .transform(
+                  testCaseCustom.input,
+                  testCaseCustom.precision,
+                  testCaseCustom.outputUnit,
+                  testCaseCustom.inputUnit,
+                )
+                .toString()
+                .trim(),
+            ).toEqual(testCaseCustom.output);
+          }
         });
       });
     });
@@ -290,36 +292,36 @@ describe('DtDurationPipe', () => {
 
   describe('Empty Values / Invalid Values', () => {
     it(`should return '${NO_DATA}' for empty values`, () => {
-      expect(pipe.transform('', undefined, undefined)).toEqual(NO_DATA);
-      expect(pipe.transform(null, undefined, undefined)).toEqual(NO_DATA);
-      expect(pipe.transform(undefined, undefined, undefined)).toEqual(NO_DATA);
+      expect(pipe.transform('', 'DEFAULT', undefined)).toEqual(NO_DATA);
+      expect(pipe.transform(null, 'DEFAULT', undefined)).toEqual(NO_DATA);
+      expect(pipe.transform(undefined, 'DEFAULT', undefined)).toEqual(NO_DATA);
     });
     it(`should return '${NO_DATA}' for values that cannot be converted to numbers`, () => {
       class A {}
-      expect(pipe.transform([], undefined, undefined)).toEqual(NO_DATA);
-      expect(pipe.transform({}, undefined, undefined)).toEqual(NO_DATA);
-      expect(pipe.transform(() => {}, undefined, undefined)).toEqual(NO_DATA);
-      expect(pipe.transform(A, undefined, undefined)).toEqual(NO_DATA);
-      expect(pipe.transform(new A(), undefined, undefined)).toEqual(NO_DATA);
+      expect(pipe.transform([], 'DEFAULT', undefined)).toEqual(NO_DATA);
+      expect(pipe.transform({}, 'DEFAULT', undefined)).toEqual(NO_DATA);
+      expect(pipe.transform(() => {}, 'DEFAULT', undefined)).toEqual(NO_DATA);
+      expect(pipe.transform(A, 'DEFAULT', undefined)).toEqual(NO_DATA);
+      expect(pipe.transform(new A(), 'DEFAULT', undefined)).toEqual(NO_DATA);
     });
     it(`should return '${NO_DATA}' for combined strings`, () => {
-      expect(pipe.transform('123test', undefined, undefined)).toEqual(NO_DATA);
+      expect(pipe.transform('123test', 'DEFAULT', undefined)).toEqual(NO_DATA);
     });
   });
 
   describe('should handle 0 and negative numbers', () => {
     it('should handle 0', () => {
-      expect(pipe.transform('0', undefined, undefined).toString()).toEqual(
+      expect(pipe.transform('0', 'DEFAULT', undefined).toString()).toEqual(
         '< 1 ms',
       );
     });
     it('should handle -1', () => {
-      expect(pipe.transform('-1', undefined, undefined).toString()).toEqual(
+      expect(pipe.transform('-1', 'DEFAULT', undefined).toString()).toEqual(
         '< 1 ms',
       );
     });
     it('should handle -123', () => {
-      expect(pipe.transform('-123', undefined, undefined).toString()).toEqual(
+      expect(pipe.transform('-123', 'DEFAULT', undefined).toString()).toEqual(
         '< 1 ms',
       );
     });

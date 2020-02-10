@@ -14,11 +14,25 @@
  * limitations under the License.
  */
 
-import { DtTimeUnit } from '../..';
+import { DtTimeUnit } from '../unit';
 
-export enum DurationMode {
-  DEFAULT = 'DEFAULT',
-  PRECISE = 'PRECISE',
+// export enum DurationMode {
+//   DEFAULT = 'DEFAULT',
+//   PRECISE = 'PRECISE',
+// }
+
+export type DurationMode = 'DEFAULT' | 'PRECISE' | number;
+
+export function toDurationMode(
+  formatMethod: string | number,
+): DurationMode | undefined {
+  if (formatMethod === 'DEFAULT') {
+    return 'DEFAULT';
+  } else if (formatMethod === 'PRECISE') {
+    return 'PRECISE';
+  } else if (typeof formatMethod === 'number') {
+    return formatMethod;
+  }
 }
 
 // tslint:disable: no-magic-numbers
@@ -31,8 +45,8 @@ export const CONVERSION_FACTORS_TO_MS = new Map<DtTimeUnit, number>([
   [DtTimeUnit.MINUTE, 60 * 1000],
   [DtTimeUnit.SECOND, 1000],
   [DtTimeUnit.MILLISECOND, 1],
-  [DtTimeUnit.MICROSECOND, 0.001],
-  [DtTimeUnit.NANOSECOND, 0.000001],
+  [DtTimeUnit.MICROSECOND, 1000],
+  [DtTimeUnit.NANOSECOND, 1],
 ]);
 
 export const CONVERSIONUNITS = 3;

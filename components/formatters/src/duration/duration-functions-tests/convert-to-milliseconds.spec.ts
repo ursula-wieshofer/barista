@@ -85,34 +85,34 @@ describe('DtDurationFormatter', () => {
         duration: 1,
         inputUnit: DtTimeUnit.MICROSECOND,
         isSmallerThanMs: false,
-        output: 0.001,
+        output: 1000,
       },
       {
         duration: 1000,
         inputUnit: DtTimeUnit.MICROSECOND,
         isSmallerThanMs: false,
-        output: 1,
+        output: 1000000,
       },
       {
         duration: 123.455,
         inputUnit: DtTimeUnit.MICROSECOND,
         isSmallerThanMs: false,
-        output: 0.123455,
+        output: 123455,
       },
       {
         duration: 1,
         inputUnit: DtTimeUnit.NANOSECOND,
-        output: 0.000001,
+        output: 1,
       },
       {
         duration: 1000000,
         inputUnit: DtTimeUnit.NANOSECOND,
-        output: 1,
+        output: 1000000,
       },
       {
         duration: 123.455,
         inputUnit: DtTimeUnit.NANOSECOND,
-        output: 0.000123455,
+        output: 123.455,
       },
     ].forEach((testCase: TestCase) => {
       it(`Duration '${testCase.duration}', input unit '${testCase.inputUnit}' should equal to '${testCase.output}'`, () => {

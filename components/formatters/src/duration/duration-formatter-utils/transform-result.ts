@@ -32,7 +32,7 @@ import {
 export function dtTransformResult(
   duration: number,
   inputUnit: DtTimeUnit,
-  formatMethod: string | undefined,
+  formatMethod: DurationMode,
 ): Map<DtTimeUnit, string> | undefined {
   const result = new Map<DtTimeUnit, string>();
   const conversionFactorKeys = Array.from(CONVERSION_FACTORS_TO_MS.keys());
@@ -41,17 +41,17 @@ export function dtTransformResult(
   let displayedUnits = 0;
   let unitsToDisplay = CONVERSIONUNITS;
 
-  if (
-    formatMethod &&
-    formatMethod !== DurationMode.DEFAULT &&
-    formatMethod !== undefined
-  ) {
-    unitsToDisplay = parseInt(formatMethod);
+  if (typeof formatMethod === 'number') {
+    unitsToDisplay = formatMethod;
   }
 
   for (const key of conversionFactorKeys) {
     const factor = CONVERSION_FACTORS_TO_MS.get(key)!;
-    const amount = Math.trunc(rest / factor);
+    let amount;
+    if (key === DtTimeUnit.MICROSECOND) {
+      rest = Math.round(rest * 1000000);
+    }
+    amount = Math.trunc(rest / factor);
     if (displayedUnits < unitsToDisplay) {
       if (amount > 0) {
         result.set(key, amount.toString());
@@ -62,6 +62,7 @@ export function dtTransformResult(
     }
     rest = rest - amount * factor;
   }
-
   return result;
 }
+
+// 0.001001
