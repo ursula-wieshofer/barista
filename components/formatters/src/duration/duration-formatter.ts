@@ -21,27 +21,14 @@ import {
   SourceData,
 } from '../formatted-value';
 import { DtTimeUnit } from '../unit';
-
-enum DurationMode {
-  DEFAULT = 'DEFAULT',
-  PRECISE = 'PRECISE',
-}
-
-// tslint:disable: no-magic-numbers
-// Factorials needed for converting milliseconds to other time units
-const CONVERSION_FACTORS_TO_MS = new Map<DtTimeUnit, number>([
-  [DtTimeUnit.YEAR, 12 * 30.41666 * 24 * 60 * 60 * 1000],
-  [DtTimeUnit.MONTH, 30.41666 * 24 * 60 * 60 * 1000],
-  [DtTimeUnit.DAY, 24 * 60 * 60 * 1000],
-  [DtTimeUnit.HOUR, 60 * 60 * 1000],
-  [DtTimeUnit.MINUTE, 60 * 1000],
-  [DtTimeUnit.SECOND, 1000],
-  [DtTimeUnit.MILLISECOND, 1],
-  [DtTimeUnit.MICROSECOND, 0.001],
-  [DtTimeUnit.NANOSECOND, 0.000001],
-]);
-
-const CONVERSIONUNITS = 3;
+import {
+  DurationMode,
+  CONVERSION_FACTORS_TO_MS,
+} from './duration-formatter-constants';
+import {
+  dtTransformResultWithOutputUnit,
+  dtTransformResult,
+} from './duration-formatter-utils';
 
 /**
  * Formats a numeric value to a duration
@@ -76,7 +63,7 @@ export function formatDuration(
       formatMethod = DurationMode.DEFAULT;
     }
     if (formatMethod === DurationMode.PRECISE) {
-      result = transformResultWithOutputUnit(
+      result = dtTransformResultWithOutputUnit(
         duration,
         inputUnit,
         outputUnit,
@@ -84,17 +71,17 @@ export function formatDuration(
       );
     } else if (formatMethod === DurationMode.DEFAULT) {
       if (outputUnit) {
-        result = transformResultWithOutputUnit(
+        result = dtTransformResultWithOutputUnit(
           duration,
           inputUnit,
           outputUnit,
           formatMethod,
         );
       } else {
-        result = transformResult(duration, inputUnit, formatMethod);
+        result = dtTransformResult(duration, inputUnit, formatMethod);
       }
     } else {
-      result = transformResult(duration, inputUnit, formatMethod);
+      result = dtTransformResult(duration, inputUnit, formatMethod);
     }
 
     // Return NO_DATA when inputUnit is invalid
@@ -117,133 +104,4 @@ export function formatDuration(
     };
     return new DtFormattedValue(inputData, formattedData);
   }
-}
-
-/**
- * Calculates output duration in either "DEFAULT" or "CUSTOM" mode.
- * If precision is DEFAULT or undefined then display a maximum of three units, but
- * when precision is a number(custom), then display that amount of units.
- * @param duration numeric time value
- * @param inputUnit dtTimeUnit value describing which unit the duration is in
- * @param formatMethod the formatting method
- */
-function transformResult(
-  duration: number,
-  inputUnit: DtTimeUnit,
-  formatMethod: string | undefined,
-): Map<DtTimeUnit, string> | undefined {
-  const result = new Map<DtTimeUnit, string>();
-  const conversionFactorKeys = Array.from(CONVERSION_FACTORS_TO_MS.keys());
-
-  let rest = duration * CONVERSION_FACTORS_TO_MS.get(inputUnit)!;
-  let displayedUnits = 0;
-  let unitsToDisplay = CONVERSIONUNITS;
-
-  if (
-    formatMethod &&
-    formatMethod !== DurationMode.DEFAULT &&
-    formatMethod !== undefined
-  ) {
-    unitsToDisplay = parseInt(formatMethod);
-  }
-
-  for (const key of conversionFactorKeys) {
-    const factor = CONVERSION_FACTORS_TO_MS.get(key)!;
-    const amount = Math.trunc(rest / factor);
-    if (displayedUnits < unitsToDisplay) {
-      if (amount > 0) {
-        result.set(key, amount.toString());
-        displayedUnits++;
-      } else if (displayedUnits > 0) {
-        displayedUnits++;
-      }
-    }
-    rest = rest - amount * factor;
-  }
-
-  return result;
-}
-
-/**
- * Calculates duration based on the outputUnit provided and presents the output only in that outputUnit.
- * @param duration numeric time value
- * @param inputUnit dtTimeUnit value describing which unit the duration is in
- * @param outputUnit dtTimeUnit | undefined value describing the unit to which it should format
- * @param formatMethod the formatting method
- */
-function transformResultWithOutputUnit(
-  duration: number,
-  inputUnit: DtTimeUnit,
-  outputUnit: DtTimeUnit | undefined,
-  formatMethod: string,
-): Map<DtTimeUnit, string> | undefined {
-  let result = new Map<DtTimeUnit, string>();
-  const conversionFactorKeys = Array.from(CONVERSION_FACTORS_TO_MS.keys());
-
-  let amount;
-
-  if (inputUnit === DtTimeUnit.MILLISECOND) {
-    amount = duration;
-  } else if (
-    conversionFactorKeys.indexOf(inputUnit) <
-    conversionFactorKeys.indexOf(DtTimeUnit.MILLISECOND)
-  ) {
-    amount = convertToMilliseconds(duration, inputUnit, false);
-  } else {
-    amount = convertToMilliseconds(duration, inputUnit, true);
-  }
-
-  if (outputUnit) {
-    let factor = CONVERSION_FACTORS_TO_MS.get(outputUnit)!;
-    if (formatMethod === DurationMode.PRECISE) {
-      amount = amount / factor;
-      return result.set(outputUnit, amount.toString());
-    } else {
-      amount = Math.round(amount / factor);
-      if (amount < 1) {
-        return result.set(outputUnit, '< 1');
-      }
-      return result.set(outputUnit, amount.toString());
-    }
-  } else {
-    return transformResult(
-      duration,
-      inputUnit,
-      CONVERSION_FACTORS_TO_MS.size.toString(),
-    );
-  }
-}
-
-/**
- * Converts any duration to milliseconds
- * @param duration numeric time value
- * @param inputUnit dtTimeUnit value describing which unit the duration is in
- * @param isSmaller whether duration is smaller than a millisecond
- */
-function convertToMilliseconds(
-  duration: number,
-  inputUnit: DtTimeUnit,
-  isSmaller: boolean,
-): number {
-  let amount = duration;
-  const conversionFactorKeys = Array.from(CONVERSION_FACTORS_TO_MS.keys());
-
-  if (isSmaller) {
-    if (
-      conversionFactorKeys.indexOf(inputUnit) ===
-      conversionFactorKeys.indexOf(DtTimeUnit.NANOSECOND)
-    ) {
-      amount =
-        amount *
-        CONVERSION_FACTORS_TO_MS.get(DtTimeUnit.NANOSECOND)! *
-        CONVERSION_FACTORS_TO_MS.get(DtTimeUnit.MICROSECOND)!;
-    }
-    if (conversionFactorKeys.indexOf(inputUnit)) {
-      amount = amount * CONVERSION_FACTORS_TO_MS.get(DtTimeUnit.MICROSECOND)!;
-    }
-  } else {
-    amount = amount * CONVERSION_FACTORS_TO_MS.get(inputUnit)!;
-  }
-
-  return amount;
 }

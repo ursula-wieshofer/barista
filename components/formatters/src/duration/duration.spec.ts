@@ -19,7 +19,7 @@ import { NO_DATA } from '../formatted-value';
 import { DtTimeUnit } from '../unit';
 import { DtDuration } from './duration';
 
-describe('DtTimePipe', () => {
+describe('DtDurationPipe', () => {
   interface TestCase {
     input: number;
     inputUnit: DtTimeUnit | undefined;
