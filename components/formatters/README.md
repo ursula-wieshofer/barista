@@ -44,7 +44,7 @@ The `dtRate` pipe provides a way to add a rate info to the value
 
 ### Duration
 
-The `dtDuration` pipe provides a way to format a input time to a timestamp
+The `dtDuration` pipe provides a way to format an input time to a timestamp
 
 <ba-live-example name="DtExampleFormattersTime"></ba-live-example>
 
@@ -138,17 +138,18 @@ from a previous pipe with a rate. The function takes the following parameters:
 
 ### Duration
 
-The `formatDuration` function converts a number to a timestamp. Default
-behaviour will print the first available value/unit and only the next two
-descending units.
+The `formatDuration` function converts a number to a duration string and
+consumes a formatMethod which dictates how the output is built.
 
-**Formatting/Precision modes:**
+- **Default:** mode will look for the first unit that has a value and will only
+  print the next two descending units as long as they have values. The results
+  will be rounded to decimal numbers.
+- **Precise:** mode will only print the unit that it consumed, but the value can
+  be real numbers
+- **Custom/Number (1-n):** will tell the formatter to print a custom amount of
+  units.
 
-- `DEFAULT` | `undefined`: Will print three units starting from the first unit
-  with a value and descends two units.
-- `PRECISE`: Prints every unit with a value or prints a decimal number when a
-  outputUnit is provided.
-- `1 - n`: Prints a custom amount of units.
+You can specify the following properties on your options:
 
 | Name           | Type              | Default     | Description                                                  |
 | -------------- | ----------------- | ----------- | ------------------------------------------------------------ |
@@ -156,6 +157,68 @@ descending units.
 | `formatMethod` | `string | number` | `undefined` | Formatting/Precision mode configuring the output of the pipe |
 | `outputUnit`   | `DtTimeUnit`      | `undefined` | Which unit to transform the input to                         |
 | `inputUnit`    | `DtTimeUnit`      | `undefined` | Which timeunit is used for the input                         |
+
+#### Examples
+
+1. Default:
+
+```html
+{{ <input /> | dtDuration: 'DEFAULT'}}
+```
+
+- Input: 1500
+- FormatMethod: DEFAULT
+- OutputUnit: undefined
+- InputUnit: undefined
+- **Output:** 1 s 500 ms
+
+2. Default with outputUnit set:
+
+```html
+{{ <input /> | dtDuration: 'DEFAULT':'s'}}
+```
+
+- Input: 1500
+- FormatMethod: DEFAULT
+- OutputUnit: _seconds_
+- InputUnit: undefined
+- **Output:** 1 s
+
+3. Precise Example:
+
+```html
+{{ <input /> | dtDuration: 'PRECISE'}}
+```
+
+- Input: 1500
+- FormatMethod: PRECISE
+- OutputUnit: undefined
+- InputUnit: undefined
+- **Output:** 1.5 s
+
+4. Precise with outputUnit set:
+
+```html
+{{ <input /> | dtDuration: 'PRECISE':'s'}}
+```
+
+- Input: 1500
+- FormatMethod: PRECISE
+- OutputUnit: _seconds_
+- InputUnit: undefined
+- **Output:** 1 s 500 ms
+
+5. Custom amount of units to display:
+
+```html
+{{ <input /> | dtDuration: 'DEFAULT':'5'}}
+```
+
+- Input: 1500
+- FormatMethod: 5
+- OutputUnit: undefined <!--Number-->
+- InputUnit: undefined
+- **Output:** 1 s 500 ms
 
 ## Special uses (e.g. infographics, tiles)
 
