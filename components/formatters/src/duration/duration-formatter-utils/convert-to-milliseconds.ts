@@ -21,13 +21,14 @@ import { CONVERSION_FACTORS_TO_MS } from '../duration-formatter-constants';
  * Converts any duration to milliseconds
  * @param duration numeric time value
  * @param inputUnit dtTimeUnit value describing which unit the duration is in
- * @param isSmallerThanMs whether duration is smaller than a millisecond
  */
 export function dtConvertToMilliseconds(
   duration: number,
   inputUnit: DtTimeUnit,
-): number {
-  let amount = duration;
-  amount = amount * CONVERSION_FACTORS_TO_MS.get(inputUnit)!;
-  return amount;
+): number | undefined {
+  if (duration > 0) {
+    let amount = duration;
+    amount = amount * CONVERSION_FACTORS_TO_MS.get(inputUnit)!;
+    return amount;
+  }
 }

@@ -89,6 +89,26 @@ describe('DtDurationPipe', () => {
         inputUnit: DtTimeUnit.SECOND,
         output: '1 s 500 ms',
       },
+      {
+        input: -1,
+        inputUnit: DtTimeUnit.MILLISECOND,
+        output: '< 1 ms',
+      },
+      {
+        input: 0,
+        inputUnit: DtTimeUnit.MILLISECOND,
+        output: '< 1 ms',
+      },
+      {
+        input: 0.9,
+        inputUnit: DtTimeUnit.MILLISECOND,
+        output: '900 µs',
+      },
+      {
+        input: 0.4,
+        inputUnit: DtTimeUnit.MILLISECOND,
+        output: '400 µs',
+      },
     ].forEach((testCase: TestCase) => {
       it(`should display ${testCase.output} when input is ${testCase.input} and inputUnit is '${testCase.inputUnit}'`, () => {
         expect(

@@ -114,6 +114,26 @@ describe('DtDurationFormatter', () => {
         inputUnit: DtTimeUnit.NANOSECOND,
         output: 123.455,
       },
+      {
+        duration: -123.455,
+        inputUnit: DtTimeUnit.NANOSECOND,
+        output: undefined,
+      },
+      {
+        duration: -0.001,
+        inputUnit: DtTimeUnit.NANOSECOND,
+        output: undefined,
+      },
+      {
+        duration: -1,
+        inputUnit: DtTimeUnit.NANOSECOND,
+        output: undefined,
+      },
+      {
+        duration: 0,
+        inputUnit: DtTimeUnit.NANOSECOND,
+        output: undefined,
+      },
     ].forEach((testCase: TestCase) => {
       it(`Duration '${testCase.duration}', input unit '${testCase.inputUnit}' should equal to '${testCase.output}'`, () => {
         expect(

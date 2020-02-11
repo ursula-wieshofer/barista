@@ -40,8 +40,8 @@ export const CONVERSION_FACTORS_TO_MS = new Map<DtTimeUnit, number>([
   [DtTimeUnit.MINUTE, 60 * 1000],
   [DtTimeUnit.SECOND, 1000],
   [DtTimeUnit.MILLISECOND, 1],
-  [DtTimeUnit.MICROSECOND, 1000],
-  [DtTimeUnit.NANOSECOND, 1],
+  [DtTimeUnit.MICROSECOND, 1000], // Has to be handled differently because IEEE can't handle floating point numbers very well
+  [DtTimeUnit.NANOSECOND, 1], // Has to be handled differently because IEEE can't handle floating point numbers very well
 ]);
 
 export const CONVERSIONUNITS = 3;

@@ -23,8 +23,8 @@ import {
 
 /**
  * Calculates output duration in either "DEFAULT" or "CUSTOM" mode.
- * If precision is DEFAULT or undefined then display a maximum of three units, but
- * when precision is a number(custom), then display that amount of units.
+ * If precision is DEFAULT then displays a maximum of three units, but
+ * if precision is a number, then displays that amount of units.
  * @param duration numeric time value
  * @param inputUnit dtTimeUnit value describing which unit the duration is in
  * @param formatMethod the formatting method
@@ -39,17 +39,14 @@ export function dtTransformResult(
 
   let rest = duration * CONVERSION_FACTORS_TO_MS.get(inputUnit)!;
   let displayedUnits = 0;
-  let unitsToDisplay = CONVERSIONUNITS;
-
-  if (typeof formatMethod === 'number') {
-    unitsToDisplay = formatMethod;
-  }
+  let unitsToDisplay =
+    typeof formatMethod === 'number' ? formatMethod : CONVERSIONUNITS;
 
   for (const key of conversionFactorKeys) {
     const factor = CONVERSION_FACTORS_TO_MS.get(key)!;
     let amount;
     if (key === DtTimeUnit.MICROSECOND) {
-      rest = Math.round(rest * 1000000);
+      rest = Math.round(rest * 1000000); // handles IEEE floating point number problem
     }
     amount = Math.trunc(rest / factor);
     if (displayedUnits < unitsToDisplay) {
@@ -64,5 +61,3 @@ export function dtTransformResult(
   }
   return result;
 }
-
-// 0.001001

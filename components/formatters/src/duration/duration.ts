@@ -35,7 +35,6 @@ export class DtDuration implements PipeTransform {
    * @param outputUnit dtTimeUnit | undefined value describing the unit to which it should format
    * @param inputUnit dtTimeUnit value describing which unit the duration is in
    */
-  // tslint:disable: no-any
   transform(
     duration: any,
     formatMethod: DurationMode,

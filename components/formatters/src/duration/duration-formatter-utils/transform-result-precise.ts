@@ -22,7 +22,7 @@ import {
 import { dtConvertToMilliseconds } from './convert-to-milliseconds';
 
 /**
- * Calculates duration based on the outputUnit provided and only displays result in that outputUnit.
+ * Calculates the duration precisely. Will convert duration to the inputUnit or to the outputUnit if set. (floating point number for its corelated unit)
  * @param duration numeric time value
  * @param inputUnit dtTimeUnit value describing which unit the duration is in
  * @param outputUnit dtTimeUnit | undefined value describing the unit to which it should format
@@ -60,7 +60,7 @@ function calcResult(
     const factor = CONVERSION_FACTORS_TO_MS.get(unit)!;
     amount = amount / factor;
 
-    // Need to move the point since IEEE can't handle floating point numbers very well
+    // Need to move the comma since IEEE can't handle floating point numbers very well.
     switch (unit) {
       case DtTimeUnit.MICROSECOND:
         amount *= 1000000;

@@ -31,16 +31,16 @@ import {
 } from './duration-formatter-utils';
 
 /**
- * Formats a numeric value to a duration
+ * Formats a numeric value to a duration string
  * @param duration numeric time value
  * @param formatMethod the formatting method
  * @param outputUnit dtTimeUnit | undefined value describing the unit to which it should format e.g to seconds
- * @param inputUnit dtTimeUnit value describing which unit the duration is in
+ * @param inputUnit dtTimeUnit value describing which unit the duration is in (default: milliseconds)
  */
 export function formatDuration(
   duration: number,
-  formatMethod: DurationMode,
-  outputUnit: DtTimeUnit | undefined,
+  formatMethod: DurationMode = 'DEFAULT',
+  outputUnit?: DtTimeUnit,
   inputUnit: DtTimeUnit = DtTimeUnit.MILLISECOND,
 ): DtFormattedValue | string {
   const inputData: SourceData = {
@@ -49,10 +49,9 @@ export function formatDuration(
   };
   let formattedData: FormattedData;
   let result: Map<DtTimeUnit, string> | undefined;
-
   if (duration <= 0 && formatMethod === 'DEFAULT') {
     return new DtFormattedValue(inputData, {
-      transformedValue: inputData.input,
+      transformedValue: duration,
       displayValue: '< 1',
       displayUnit: inputUnit,
     });

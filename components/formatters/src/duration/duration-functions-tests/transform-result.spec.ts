@@ -207,15 +207,17 @@ describe('DtDurationFormatter', () => {
         const formatMethod: DurationMode = toDurationMode(
           testCase.formatMethod,
         )!;
-        const result = dtTransformResult(
-          testCase.duration,
-          testCase.inputUnit,
-          formatMethod,
+        const result = Array.from(
+          dtTransformResult(
+            testCase.duration,
+            testCase.inputUnit,
+            formatMethod,
+          )!,
         );
         expect(result).not.toBeUndefined();
         testCase.outPut.forEach((outPut: Output, index) => {
-          expect(Array.from(result!)[index][0]).toBe(outPut.timeUnit);
-          expect(Array.from(result!)[index][1]).toBe(outPut.duration);
+          expect(result[index][0]).toBe(outPut.timeUnit);
+          expect(result[index][1]).toBe(outPut.duration);
         });
       });
     });
