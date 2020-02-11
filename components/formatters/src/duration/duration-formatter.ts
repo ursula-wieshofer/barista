@@ -58,48 +58,34 @@ export function formatDuration(
       displayUnit: inputUnit,
     });
   } else {
-    if (!formatMethod) {
-      formatMethod = 'DEFAULT';
-    }
-    if (formatMethod === 'PRECISE') {
+    if (outputUnit) {
       result = dtTransformResultWithOutputUnit(
         duration,
         inputUnit,
         outputUnit,
         formatMethod,
       );
-    } else if (formatMethod === 'DEFAULT') {
-      if (outputUnit) {
-        result = dtTransformResultWithOutputUnit(
-          duration,
-          inputUnit,
-          outputUnit,
-          formatMethod,
-        );
-      } else {
-        result = dtTransformResult(duration, inputUnit, formatMethod);
-      }
     } else {
       result = dtTransformResult(duration, inputUnit, formatMethod);
     }
-
-    // Return NO_DATA when inputUnit is invalid
-    if (CONVERSION_FACTORS_TO_MS.get(inputUnit) === undefined) {
-      return NO_DATA;
-    }
-    if (result === undefined) {
-      return NO_DATA;
-    }
-    let resultString = '';
-    result.forEach((value, key) => {
-      resultString = `${resultString}${value} ${key} `;
-    });
-    resultString = resultString.trim();
-    formattedData = {
-      transformedValue: inputData.input,
-      displayValue: resultString,
-      displayUnit: undefined,
-    };
-    return new DtFormattedValue(inputData, formattedData);
   }
+
+  // Return NO_DATA when inputUnit is invalid
+  if (CONVERSION_FACTORS_TO_MS.get(inputUnit) === undefined) {
+    return NO_DATA;
+  }
+  if (result === undefined) {
+    return NO_DATA;
+  }
+  let resultString = '';
+  result.forEach((value, key) => {
+    resultString = `${resultString}${value} ${key} `;
+  });
+  resultString = resultString.trim();
+  formattedData = {
+    transformedValue: inputData.input,
+    displayValue: resultString,
+    displayUnit: undefined,
+  };
+  return new DtFormattedValue(inputData, formattedData);
 }
