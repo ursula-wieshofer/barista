@@ -56,7 +56,6 @@ export function formatDuration(
       transformedValue: inputData.input,
       displayValue: '< 1',
       displayUnit: inputUnit,
-      displayWhiteSpace: false,
     });
   } else {
     if (!formatMethod) {
@@ -100,7 +99,6 @@ export function formatDuration(
       transformedValue: inputData.input,
       displayValue: resultString,
       displayUnit: undefined,
-      displayWhiteSpace: false,
     };
     return new DtFormattedValue(inputData, formattedData);
   }
