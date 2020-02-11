@@ -19,55 +19,61 @@ import {
   CONVERSION_FACTORS_TO_MS,
   DurationMode,
 } from '../duration-formatter-constants';
-import { dtTransformResult } from './transform-result';
 import { dtConvertToMilliseconds } from './convert-to-milliseconds';
 
 /**
- * Calculates duration based on the outputUnit provided and presents the output only in that outputUnit.
+ * Calculates duration based on the outputUnit provided and only displays result in that outputUnit.
  * @param duration numeric time value
  * @param inputUnit dtTimeUnit value describing which unit the duration is in
  * @param outputUnit dtTimeUnit | undefined value describing the unit to which it should format
  * @param formatMethod the formatting method
  */
-export function dtTransformResultWithOutputUnit(
+
+export function dtTransformResultPrecise(
   duration: number,
   inputUnit: DtTimeUnit,
   outputUnit: DtTimeUnit | undefined,
   formatMethod: DurationMode,
 ): Map<DtTimeUnit, string> | undefined {
-  let result = new Map<DtTimeUnit, string>();
-  const conversionFactorKeys = Array.from(CONVERSION_FACTORS_TO_MS.keys());
-
   let amount;
-
+  let result;
   if (inputUnit === DtTimeUnit.MILLISECOND) {
     amount = duration;
-  } else if (
-    conversionFactorKeys.indexOf(inputUnit) <
-    conversionFactorKeys.indexOf(DtTimeUnit.MILLISECOND)
-  ) {
-    amount = dtConvertToMilliseconds(duration, inputUnit);
   } else {
     amount = dtConvertToMilliseconds(duration, inputUnit);
   }
+  result =
+    outputUnit !== undefined
+      ? calcResult(amount, formatMethod, outputUnit)
+      : calcResult(amount, formatMethod, inputUnit);
 
-  if (outputUnit) {
-    let factor = CONVERSION_FACTORS_TO_MS.get(outputUnit)!;
-    if (formatMethod === 'PRECISE') {
-      amount = amount / factor;
-      return result.set(outputUnit, amount.toString());
-    } else {
-      amount = Math.trunc(amount / factor);
-      if (amount < 1) {
-        return result.set(outputUnit, '< 1');
-      }
-      return result.set(outputUnit, amount.toString());
+  return result;
+}
+
+function calcResult(
+  amount: number,
+  formatMethod: DurationMode,
+  unit: DtTimeUnit,
+): Map<DtTimeUnit, string> {
+  let result = new Map<DtTimeUnit, string>();
+  if (formatMethod === 'PRECISE') {
+    const factor = CONVERSION_FACTORS_TO_MS.get(unit)!;
+    amount = amount / factor;
+
+    // Need to move the point since IEEE can't handle floating point numbers very well
+    switch (unit) {
+      case DtTimeUnit.MICROSECOND:
+        amount *= 1000000;
+        break;
+      case DtTimeUnit.NANOSECOND:
+        amount *= 1000000;
+        break;
     }
+    result.set(unit, amount.toString());
   } else {
-    return dtTransformResult(
-      duration,
-      inputUnit,
-      CONVERSION_FACTORS_TO_MS.size,
-    );
+    const factor = CONVERSION_FACTORS_TO_MS.get(unit)!;
+    amount = Math.trunc(amount / factor);
+    amount < 1 ? result.set(unit, '< 1') : result.set(unit, amount.toString());
   }
+  return result;
 }

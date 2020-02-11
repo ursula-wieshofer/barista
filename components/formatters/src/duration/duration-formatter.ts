@@ -26,7 +26,7 @@ import {
   CONVERSION_FACTORS_TO_MS,
 } from './duration-formatter-constants';
 import {
-  dtTransformResultWithOutputUnit,
+  dtTransformResultPrecise,
   dtTransformResult,
 } from './duration-formatter-utils';
 
@@ -57,8 +57,8 @@ export function formatDuration(
       displayUnit: inputUnit,
     });
   } else {
-    if (outputUnit) {
-      result = dtTransformResultWithOutputUnit(
+    if (outputUnit || formatMethod === 'PRECISE') {
+      result = dtTransformResultPrecise(
         duration,
         inputUnit,
         outputUnit,

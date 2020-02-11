@@ -20,6 +20,6 @@ import { Component } from '@angular/core';
   selector: 'dt-example-formatters-time-example',
   templateUrl: 'formatters-time-example.html',
 })
-export class DtExampleFormattersTime {
+export class DtExampleFormattersDuration {
   exampleValue: number;
 }

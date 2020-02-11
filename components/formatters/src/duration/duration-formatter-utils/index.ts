@@ -16,4 +16,4 @@
 
 export * from './convert-to-milliseconds';
 export * from './transform-result';
-export * from './transform-result-with-output-unit';
+export * from './transform-result-precise';

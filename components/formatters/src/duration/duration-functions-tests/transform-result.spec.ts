@@ -27,12 +27,12 @@ describe('DtDurationFormatter', () => {
   interface TestCase {
     duration: number;
     inputUnit: DtTimeUnit;
-    formatMethod: string;
+    formatMethod: string | number;
     outPut: Output[];
     displayedOutPut: string;
   }
 
-  describe('dtTransformResult()', () => {
+  describe('dtTransformResult() Mode: DEFAULT', () => {
     [
       {
         duration: 1,
@@ -203,8 +203,7 @@ describe('DtDurationFormatter', () => {
         displayedOutPut: '1 µs 1 ns',
       },
     ].forEach((testCase: TestCase) => {
-      // tslint:disable-next-line: dt-no-focused-tests
-      it.only(`Duration '${testCase.duration}', input unit '${testCase.inputUnit}' should equal to '${testCase.displayedOutPut}'`, () => {
+      it(`Duration '${testCase.duration}', input unit '${testCase.inputUnit}' should equal to '${testCase.displayedOutPut}'`, () => {
         const formatMethod: DurationMode = toDurationMode(
           testCase.formatMethod,
         )!;
@@ -215,8 +214,75 @@ describe('DtDurationFormatter', () => {
         );
         expect(result).not.toBeUndefined();
         testCase.outPut.forEach((outPut: Output, index) => {
-          expect(Array.from(result!)[index]).toContain(outPut.timeUnit);
-          expect(Array.from(result!)[index]).toContain(outPut.duration);
+          expect(Array.from(result!)[index][0]).toBe(outPut.timeUnit);
+          expect(Array.from(result!)[index][1]).toBe(outPut.duration);
+        });
+      });
+    });
+
+    describe('dtTransformResult() Mode: Custom', () => {
+      [
+        {
+          duration: 123456789,
+          inputUnit: DtTimeUnit.MILLISECOND,
+          formatMethod: 2,
+          outPut: [
+            {
+              timeUnit: DtTimeUnit.DAY,
+              duration: '1',
+            },
+            {
+              timeUnit: DtTimeUnit.HOUR,
+              duration: '10',
+            },
+          ],
+          displayedOutPut: '1 d 10',
+        },
+        {
+          duration: 123456789,
+          inputUnit: DtTimeUnit.MILLISECOND,
+          formatMethod: 5,
+          outPut: [
+            {
+              timeUnit: DtTimeUnit.DAY,
+              duration: '1',
+            },
+            {
+              timeUnit: DtTimeUnit.HOUR,
+              duration: '10',
+            },
+            {
+              timeUnit: DtTimeUnit.MINUTE,
+              duration: '17',
+            },
+            {
+              timeUnit: DtTimeUnit.SECOND,
+              duration: '36',
+            },
+            {
+              timeUnit: DtTimeUnit.MILLISECOND,
+              duration: '789',
+            },
+          ],
+          displayedOutPut: '1 d 10 h 17 min 36 s 789 ms',
+        },
+      ].forEach((testCase: TestCase) => {
+        it(`Duration '${testCase.duration}', input unit '${testCase.inputUnit}' should equal to '${testCase.displayedOutPut}'`, () => {
+          const formatMethod: DurationMode = toDurationMode(
+            testCase.formatMethod,
+          )!;
+          const result = Array.from(
+            dtTransformResult(
+              testCase.duration,
+              testCase.inputUnit,
+              formatMethod,
+            )!,
+          );
+          expect(result).not.toBeUndefined();
+          testCase.outPut.forEach((outPut: Output, index) => {
+            expect(result[index][0]).toBe(outPut.timeUnit);
+            expect(result[index][1]).toBe(outPut.duration);
+          });
         });
       });
     });

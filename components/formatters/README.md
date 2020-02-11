@@ -151,74 +151,16 @@ consumes a formatMethod which configures how the output is built.
 
 You can specify the following properties on your options:
 
-| Name           | Type              | Default     | Description                                                  |
-| -------------- | ----------------- | ----------- | ------------------------------------------------------------ |
-| `input`        | `number`          | `ms`        | Numeric value to be transformed by the pipe                  |
-| `formatMethod` | `string | number` | `undefined` | Formatting/Precision mode configuring the output of the pipe |
-| `outputUnit`   | `DtTimeUnit`      | `undefined` | Which unit to transform the input to                         |
-| `inputUnit`    | `DtTimeUnit`      | `undefined` | Which timeunit is used for the input                         |
+| Name           | Type                            | Default        | Description                                      |
+| -------------- | ------------------------------- | -------------- | ------------------------------------------------ |
+| `input`        | `number`                        |                | Numeric value to be transformed                  |
+| `formatMethod` | `'DEFAULT | 'PRECISE' | number` | `'DEFAULT'`    | Formatting/Precision mode configuring the output |
+| `outputUnit`   | `DtTimeUnit`                    | `undefined`    | Which unit to transform the input to             |
+| `inputUnit`    | `DtTimeUnit`                    | `Milliseconds` | Which timeunit is used for the input             |
 
 #### Examples
 
-1. Default:
-
-```html
-{{ <input /> | dtDuration: 'DEFAULT'}}
-```
-
-- Input: 1500
-- FormatMethod: DEFAULT
-- OutputUnit: undefined
-- InputUnit: undefined
-- **Output:** 1 s 500 ms
-
-2. Default with outputUnit set:
-
-```html
-{{ <input /> | dtDuration: 'DEFAULT':'s'}}
-```
-
-- Input: 1500
-- FormatMethod: DEFAULT
-- OutputUnit: _seconds_
-- InputUnit: undefined
-- **Output:** 1 s
-
-3. Precise Example:
-
-```html
-{{ <input /> | dtDuration: 'PRECISE'}}
-```
-
-- Input: 1500
-- FormatMethod: PRECISE
-- OutputUnit: undefined
-- InputUnit: undefined
-- **Output:** 1.5 s
-
-4. Precise with outputUnit set:
-
-```html
-{{ <input /> | dtDuration: 'PRECISE':'s'}}
-```
-
-- Input: 1500
-- FormatMethod: PRECISE
-- OutputUnit: _seconds_
-- InputUnit: undefined
-- **Output:** 1 s 500 ms
-
-5. Custom amount of units to display:
-
-```html
-{{ <input /> | dtDuration: 'DEFAULT':'5'}}
-```
-
-- Input: 1500
-- FormatMethod: 5
-- OutputUnit: undefined <!--Number-->
-- InputUnit: undefined
-- **Output:** 1 s 500 ms
+<ba-live-example name="DtExampleFormattersDuration"></ba-live-example>
 
 ## Special uses (e.g. infographics, tiles)
 
