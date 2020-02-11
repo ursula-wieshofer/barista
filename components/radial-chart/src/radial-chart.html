@@ -1,5 +1,9 @@
 <div class="dt-radial-chart-wrapper">
-  <svg [attr.viewBox]="_viewBox" [attr.width]="_width">
+  <svg
+    [attr.viewBox]="_viewBox"
+    [attr.width]="_width"
+    class="dt-radial-chart-svg"
+  >
     <svg:path
       *ngIf="_hasBackground"
       [attr.d]="_backgroundPath"

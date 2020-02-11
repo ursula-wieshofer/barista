@@ -32,13 +32,10 @@ import {
 } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { DT_CHART_COLOR_PALETTE_ORDERED } from '@dynatrace/barista-components/chart';
-import {
-  DtViewportResizer,
-  isNumber,
-} from '@dynatrace/barista-components/core';
+import { isNumber } from '@dynatrace/barista-components/core';
 import { PieArcDatum } from 'd3-shape';
 import { combineLatest, of, Subject } from 'rxjs';
-import { switchMap, takeUntil, startWith } from 'rxjs/operators';
+import { switchMap, takeUntil } from 'rxjs/operators';
 import { DtRadialChartSeries } from './radial-chart-series';
 import { DtRadialChartRenderData } from './utils/radial-chart-interfaces';
 import {
@@ -169,13 +166,19 @@ export class DtRadialChart implements AfterContentInit, OnDestroy {
 
   constructor(
     private _elementRef: ElementRef<HTMLElement>,
-    private _viewportResizer: DtViewportResizer,
     private _changeDetectorRef: ChangeDetectorRef,
     private _sanitizer: DomSanitizer,
   ) {}
 
   /** AfterContentInit hook */
   ngAfterContentInit(): void {
+    /**
+     * Initially set the width of the SVG to the available width
+     * to calculate the radius and the viewbox.
+     */
+    this._width = this._elementRef.nativeElement.getBoundingClientRect().width;
+    this._updateRenderData();
+
     /**
      * Fires every time a value within one of the series changes
      * or the series data itself gets an update (one series is added or removed).
@@ -192,20 +195,6 @@ export class DtRadialChart implements AfterContentInit, OnDestroy {
         takeUntil(this._destroy$),
       )
       .subscribe((): void => {
-        this._updateRenderData();
-      });
-
-    /**
-     * Fires every time the viewport size changes and applies the new width of the chart.
-     */
-    this._viewportResizer
-      .change()
-      .pipe(
-        startWith(null),
-        takeUntil(this._destroy$),
-      )
-      .subscribe(() => {
-        this._width = this._elementRef.nativeElement.getBoundingClientRect().width;
         this._updateRenderData();
       });
   }
