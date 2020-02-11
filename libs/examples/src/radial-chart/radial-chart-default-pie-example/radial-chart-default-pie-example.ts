@@ -18,9 +18,9 @@ import { Component } from '@angular/core';
 
 @Component({
   selector: 'dt-example-radial-chart-pie-default',
-  templateUrl: 'radial-chart-default-pie-example.html',
+  templateUrl: './radial-chart-default-pie-example.html',
 })
-export class RadialChartDefaultDonutExample {
+export class DtExampleRadialChartDefaultPie {
   _chartSeries = [
     {
       name: 'Chrome',

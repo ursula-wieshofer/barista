@@ -18,7 +18,7 @@ import { Component } from '@angular/core';
 
 @Component({
   selector: 'dt-example-radial-chart-max-value',
-  templateUrl: 'radial-chart-max-value-example.html',
+  templateUrl: './radial-chart-max-value-example.html',
 })
 export class DtExampleRadialChartMaxValue {
   _maxValue = 100;

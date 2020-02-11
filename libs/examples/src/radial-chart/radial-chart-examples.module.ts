@@ -16,21 +16,24 @@
 
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { DtButtonModule } from '@dynatrace/barista-components/button';
 import { DtRadialChartModule } from '@dynatrace/barista-components/radial-chart';
 import { DtExampleRadialChartCustomColors } from './radial-chart-custom-colors-example/radial-chart-custom-colors-example';
 import { DtExampleRadialChartDefaultDonut } from './radial-chart-default-donut-example/radial-chart-default-donut-example';
-import { RadialChartDefaultDonutExample } from './radial-chart-default-pie-example/radial-chart-default-pie-example';
+import { DtExampleRadialChartDefaultPie } from './radial-chart-default-pie-example/radial-chart-default-pie-example';
 import { DtExampleRadialChartMaxValue } from './radial-chart-max-value-example/radial-chart-max-value-example';
+import { DtExampleRadialChartLegend } from './radial-chart-legend-example/radial-chart-legend-example';
 
 export const DT_RADIAL_CHART_EXAMPLES = [
   DtExampleRadialChartCustomColors,
   DtExampleRadialChartDefaultDonut,
-  RadialChartDefaultDonutExample,
+  DtExampleRadialChartDefaultPie,
   DtExampleRadialChartMaxValue,
+  DtExampleRadialChartLegend,
 ];
 
 @NgModule({
-  imports: [CommonModule, DtRadialChartModule],
+  imports: [CommonModule, DtRadialChartModule, DtButtonModule],
   declarations: [...DT_RADIAL_CHART_EXAMPLES],
   entryComponents: [...DT_RADIAL_CHART_EXAMPLES],
 })

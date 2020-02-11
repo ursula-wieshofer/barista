@@ -18,7 +18,7 @@ import { Component } from '@angular/core';
 
 @Component({
   selector: 'dt-example-radial-chart-custom-colors',
-  templateUrl: 'radial-chart-custom-colors-example.html',
+  templateUrl: './radial-chart-custom-colors-example.html',
 })
 export class DtExampleRadialChartCustomColors {
   _chartSeries = [

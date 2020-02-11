@@ -2,20 +2,13 @@
 
 <ba-ux-snippet name="radial-chart-intro"></ba-ux-snippet>
 
-The radial chart component is used to display one or more data series either as
-pie chart or donut chart.
-
-<!-- TODO: A pie chart is commonly used to ... -->
-
 <ba-ux-snippet name="radial-chart-pie"></ba-ux-snippet>
 
-<docs-source-example example="RadialChartDefaultPieExample"></docs-source-example>
-
-<!-- TODO: Use a donut chart when you want to display ... -->
+<ba-live-example name="DtExampleRadialChartDefaultPie"></docs-source-example>
 
 <ba-ux-snippet name="radial-chart-donut"></ba-ux-snippet>
 
-<docs-source-example example="RadialChartDefaultDonutExample"></docs-source-example>
+<ba-live-example name="DtExampleRadialChartDefaultDonut"></docs-source-example>
 
 ## Imports
 
@@ -45,7 +38,15 @@ is below this value, the missing part of the circle is filled with a background
 color. If the sum of all series values is above the defined maxium value, this
 value is ignored.
 
-<docs-source-example example="RadialChartMaxvalueExample"></docs-source-example>
+<ba-live-example name="DtExampleRadialChartMaxValue"></docs-source-example>
+
+### Legend
+
+A radial chart always needs a legend. It uses the legend component internally.
+You can specify the position of the radial chart by adjusting the value of the
+`legendPosition` input.
+
+<ba-live-example name="DtExampleRadialChartLegend"></docs-source-example>
 
 ## DtRadialChartSeries inputs
 
@@ -60,4 +61,4 @@ value is ignored.
 Each series can have a custom color. When no color is given for a series, the
 predefined chart colors are used.
 
-<docs-source-example example="RadialChartCustomColorsExample"></docs-source-example>
+<ba-live-example name="DtExampleRadialChartCustomColors"></docs-source-example>

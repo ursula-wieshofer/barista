@@ -17,10 +17,13 @@
 import { Component } from '@angular/core';
 
 @Component({
-  selector: 'dt-example-radial-chart-donut-default',
-  templateUrl: './radial-chart-default-donut-example.html',
+  selector: 'dt-example-radial-chart-pie-default',
+  templateUrl: './radial-chart-legend-example.html',
+  styleUrls: ['./radial-chart-legend-example.scss'],
 })
-export class DtExampleRadialChartDefaultDonut {
+export class DtExampleRadialChartLegend {
+  legendPosition: 'right' | 'bottom' = 'right';
+
   _chartSeries = [
     {
       name: 'Chrome',
@@ -39,4 +42,8 @@ export class DtExampleRadialChartDefaultDonut {
       value: 9,
     },
   ];
+
+  toggleLegendPosition(): void {
+    this.legendPosition = this.legendPosition === 'right' ? 'bottom' : 'right';
+  }
 }
