@@ -139,14 +139,14 @@ from a previous pipe with a rate. The function takes the following parameters:
 ### Duration
 
 The `formatDuration` function converts a number to a duration string and
-consumes a formatMethod which dictates how the output is built.
+consumes a formatMethod which configures how the output is built.
 
-- **Default:** mode will look for the first unit that has a value and will only
+- **'DEFAULT':** will look for the first unit that has a value and will only
   print the next two descending units as long as they have values. The results
-  will be rounded to decimal numbers.
-- **Precise:** mode will only print the unit that it consumed, but the value can
-  be real numbers
-- **Custom/Number (1-n):** will tell the formatter to print a custom amount of
+  for each time unit will be rounded to decimal numbers.
+- **'PRECISE':** will only print the unit that it consumed and the output value
+  can be real numbers. (e.g. 1.54 s)
+- **Custom/Number(1-n):** will tell the formatter to print a custom amount of
   units.
 
 You can specify the following properties on your options:

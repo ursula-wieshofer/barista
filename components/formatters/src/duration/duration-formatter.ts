@@ -51,7 +51,6 @@ export function formatDuration(
   let result: Map<DtTimeUnit, string> | undefined;
 
   if (duration <= 0 && formatMethod === 'DEFAULT') {
-    // Smaller than 0 duration impossible
     return new DtFormattedValue(inputData, {
       transformedValue: inputData.input,
       displayValue: '< 1',
