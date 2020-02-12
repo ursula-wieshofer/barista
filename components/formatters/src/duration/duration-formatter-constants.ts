@@ -45,3 +45,6 @@ export const CONVERSION_FACTORS_TO_MS = new Map<DtTimeUnit, number>([
 ]);
 
 export const CONVERSIONUNITS = 3;
+
+// Use when converting a duration to micro- or nanoseconds
+export const MOVE_COMMA = 1000000;

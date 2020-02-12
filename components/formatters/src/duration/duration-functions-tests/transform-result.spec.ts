@@ -28,8 +28,8 @@ describe('DtDurationFormatter', () => {
     duration: number;
     inputUnit: DtTimeUnit;
     formatMethod: string | number;
-    outPut: Output[];
-    displayedOutPut: string;
+    output: Output[];
+    displayedOutput: string;
   }
 
   describe('dtTransformResult() Mode: DEFAULT', () => {
@@ -38,31 +38,31 @@ describe('DtDurationFormatter', () => {
         duration: 1,
         inputUnit: DtTimeUnit.MILLISECOND,
         formatMethod: 'DEFAULT',
-        outPut: [
+        output: [
           {
             timeUnit: DtTimeUnit.MILLISECOND,
             duration: '1',
           },
         ],
-        displayedOutPut: '1 ms',
+        displayedOutput: '1 ms',
       },
       {
         duration: 1,
         inputUnit: DtTimeUnit.MILLISECOND,
         formatMethod: 'DEFAULT',
-        outPut: [
+        output: [
           {
             timeUnit: DtTimeUnit.MILLISECOND,
             duration: '1',
           },
         ],
-        displayedOutPut: '1 ms',
+        displayedOutput: '1 ms',
       },
       {
         duration: 1500,
         inputUnit: DtTimeUnit.MILLISECOND,
         formatMethod: 'DEFAULT',
-        outPut: [
+        output: [
           {
             timeUnit: DtTimeUnit.SECOND,
             duration: '1',
@@ -72,13 +72,13 @@ describe('DtDurationFormatter', () => {
             duration: '500',
           },
         ],
-        displayedOutPut: '1 s 500 ms',
+        displayedOutput: '1 s 500 ms',
       },
       {
         duration: 61500,
         inputUnit: DtTimeUnit.MILLISECOND,
         formatMethod: 'DEFAULT',
-        outPut: [
+        output: [
           {
             timeUnit: DtTimeUnit.MINUTE,
             duration: '1',
@@ -92,13 +92,13 @@ describe('DtDurationFormatter', () => {
             duration: '500',
           },
         ],
-        displayedOutPut: '1 min 1 s 500 ms',
+        displayedOutput: '1 min 1 s 500 ms',
       },
       {
         duration: 3601500,
         inputUnit: DtTimeUnit.MILLISECOND,
         formatMethod: 'DEFAULT',
-        outPut: [
+        output: [
           {
             timeUnit: DtTimeUnit.HOUR,
             duration: '1',
@@ -108,13 +108,13 @@ describe('DtDurationFormatter', () => {
             duration: '1',
           },
         ],
-        displayedOutPut: '1 h 1 s',
+        displayedOutput: '1 h 1 s',
       },
       {
         duration: 123456789,
         inputUnit: DtTimeUnit.MILLISECOND,
         formatMethod: 'DEFAULT',
-        outPut: [
+        output: [
           {
             timeUnit: DtTimeUnit.DAY,
             duration: '1',
@@ -128,13 +128,13 @@ describe('DtDurationFormatter', () => {
             duration: '17',
           },
         ],
-        displayedOutPut: '1 d 10 h 17 min',
+        displayedOutput: '1 d 10 h 17 min',
       },
       {
         duration: 12.5,
         inputUnit: DtTimeUnit.HOUR,
         formatMethod: 'DEFAULT',
-        outPut: [
+        output: [
           {
             timeUnit: DtTimeUnit.HOUR,
             duration: '12',
@@ -144,13 +144,13 @@ describe('DtDurationFormatter', () => {
             duration: '30',
           },
         ],
-        displayedOutPut: '12 h 30 min',
+        displayedOutput: '12 h 30 min',
       },
       {
         duration: 10.111,
         inputUnit: DtTimeUnit.DAY,
         formatMethod: 'DEFAULT',
-        outPut: [
+        output: [
           {
             timeUnit: DtTimeUnit.DAY,
             duration: '10',
@@ -160,37 +160,37 @@ describe('DtDurationFormatter', () => {
             duration: '2',
           },
         ],
-        displayedOutPut: '10 d 2 h',
+        displayedOutput: '10 d 2 h',
       },
       {
         duration: 100000000.1,
         inputUnit: DtTimeUnit.MILLISECOND,
         formatMethod: 'DEFAULT',
-        outPut: [
+        output: [
           {
             timeUnit: DtTimeUnit.DAY,
             duration: '1',
           },
         ],
-        displayedOutPut: '1 d',
+        displayedOutput: '1 d',
       },
       {
         duration: 0.000001,
         inputUnit: DtTimeUnit.MILLISECOND,
         formatMethod: 'DEFAULT',
-        outPut: [
+        output: [
           {
             timeUnit: DtTimeUnit.NANOSECOND,
             duration: '1',
           },
         ],
-        displayedOutPut: '1 ns',
+        displayedOutput: '1 ns',
       },
       {
         duration: 0.001001,
         inputUnit: DtTimeUnit.MILLISECOND,
         formatMethod: 'DEFAULT',
-        outPut: [
+        output: [
           {
             timeUnit: DtTimeUnit.MICROSECOND,
             duration: '1',
@@ -200,10 +200,10 @@ describe('DtDurationFormatter', () => {
             duration: '1',
           },
         ],
-        displayedOutPut: '1 µs 1 ns',
+        displayedOutput: '1 µs 1 ns',
       },
     ].forEach((testCase: TestCase) => {
-      it(`Duration '${testCase.duration}', input unit '${testCase.inputUnit}' should equal to '${testCase.displayedOutPut}'`, () => {
+      it(`Duration '${testCase.duration}', input unit '${testCase.inputUnit}' should equal to '${testCase.displayedOutput}'`, () => {
         const formatMethod: DurationMode = toDurationMode(
           testCase.formatMethod,
         )!;
@@ -215,9 +215,9 @@ describe('DtDurationFormatter', () => {
           )!,
         );
         expect(result).not.toBeUndefined();
-        testCase.outPut.forEach((outPut: Output, index) => {
-          expect(result[index][0]).toBe(outPut.timeUnit);
-          expect(result[index][1]).toBe(outPut.duration);
+        testCase.output.forEach((output: Output, index) => {
+          expect(result[index][0]).toBe(output.timeUnit);
+          expect(result[index][1]).toBe(output.duration);
         });
       });
     });
@@ -228,7 +228,7 @@ describe('DtDurationFormatter', () => {
           duration: 123456789,
           inputUnit: DtTimeUnit.MILLISECOND,
           formatMethod: 2,
-          outPut: [
+          output: [
             {
               timeUnit: DtTimeUnit.DAY,
               duration: '1',
@@ -238,13 +238,13 @@ describe('DtDurationFormatter', () => {
               duration: '10',
             },
           ],
-          displayedOutPut: '1 d 10',
+          displayedOutput: '1 d 10',
         },
         {
           duration: 123456789,
           inputUnit: DtTimeUnit.MILLISECOND,
           formatMethod: 5,
-          outPut: [
+          output: [
             {
               timeUnit: DtTimeUnit.DAY,
               duration: '1',
@@ -266,10 +266,10 @@ describe('DtDurationFormatter', () => {
               duration: '789',
             },
           ],
-          displayedOutPut: '1 d 10 h 17 min 36 s 789 ms',
+          displayedOutput: '1 d 10 h 17 min 36 s 789 ms',
         },
       ].forEach((testCase: TestCase) => {
-        it(`Duration '${testCase.duration}', input unit '${testCase.inputUnit}' should equal to '${testCase.displayedOutPut}'`, () => {
+        it(`Duration '${testCase.duration}', input unit '${testCase.inputUnit}' should equal to '${testCase.displayedOutput}'`, () => {
           const formatMethod: DurationMode = toDurationMode(
             testCase.formatMethod,
           )!;
@@ -281,9 +281,9 @@ describe('DtDurationFormatter', () => {
             )!,
           );
           expect(result).not.toBeUndefined();
-          testCase.outPut.forEach((outPut: Output, index) => {
-            expect(result[index][0]).toBe(outPut.timeUnit);
-            expect(result[index][1]).toBe(outPut.duration);
+          testCase.output.forEach((output: Output, index) => {
+            expect(result[index][0]).toBe(output.timeUnit);
+            expect(result[index][1]).toBe(output.duration);
           });
         });
       });

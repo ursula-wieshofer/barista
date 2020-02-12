@@ -18,6 +18,7 @@ import { DtTimeUnit } from '../../unit';
 import {
   CONVERSION_FACTORS_TO_MS,
   DurationMode,
+  MOVE_COMMA,
 } from '../duration-formatter-constants';
 import { dtConvertToMilliseconds } from './convert-to-milliseconds';
 
@@ -35,19 +36,13 @@ export function dtTransformResultPrecise(
   outputUnit: DtTimeUnit | undefined,
   formatMethod: DurationMode,
 ): Map<DtTimeUnit, string> | undefined {
-  let amount;
-  let result;
-  if (inputUnit === DtTimeUnit.MILLISECOND) {
-    amount = duration;
-  } else {
-    amount = dtConvertToMilliseconds(duration, inputUnit);
-  }
-  result =
-    outputUnit !== undefined
-      ? calcResult(amount, formatMethod, outputUnit)
-      : calcResult(amount, formatMethod, inputUnit);
-
-  return result;
+  const amount =
+    inputUnit === DtTimeUnit.MILLISECOND
+      ? duration
+      : dtConvertToMilliseconds(duration, inputUnit);
+  return outputUnit !== undefined
+    ? calcResult(amount, formatMethod, outputUnit)
+    : calcResult(amount, formatMethod, inputUnit);
 }
 
 function calcResult(
@@ -59,15 +54,9 @@ function calcResult(
   if (formatMethod === 'PRECISE') {
     const factor = CONVERSION_FACTORS_TO_MS.get(unit)!;
     amount = amount / factor;
-
     // Need to move the comma since IEEE can't handle floating point numbers very well.
-    switch (unit) {
-      case DtTimeUnit.MICROSECOND:
-        amount *= 1000000;
-        break;
-      case DtTimeUnit.NANOSECOND:
-        amount *= 1000000;
-        break;
+    if (unit === DtTimeUnit.MICROSECOND || unit === DtTimeUnit.NANOSECOND) {
+      amount *= MOVE_COMMA;
     }
     result.set(unit, amount.toString());
   } else {

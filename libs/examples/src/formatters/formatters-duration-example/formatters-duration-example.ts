@@ -17,8 +17,8 @@
 import { Component } from '@angular/core';
 
 @Component({
-  selector: 'dt-example-formatters-time-example',
-  templateUrl: 'formatters-time-example.html',
+  selector: 'dt-example-formatters-duration-example',
+  templateUrl: 'formatters-duration-example.html',
 })
 export class DtExampleFormattersDuration {
   exampleValue: number;

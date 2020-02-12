@@ -14,12 +14,7 @@
  * limitations under the License.
  */
 
-import {
-  DtFormattedValue,
-  FormattedData,
-  NO_DATA,
-  SourceData,
-} from '../formatted-value';
+import { DtFormattedValue, NO_DATA, SourceData } from '../formatted-value';
 import { DtTimeUnit } from '../unit';
 import {
   DurationMode,
@@ -47,26 +42,18 @@ export function formatDuration(
     input: duration,
     unit: inputUnit,
   };
-  let formattedData: FormattedData;
-  let result: Map<DtTimeUnit, string> | undefined;
   if (duration <= 0 && formatMethod === 'DEFAULT') {
     return new DtFormattedValue(inputData, {
       transformedValue: duration,
       displayValue: '< 1',
       displayUnit: inputUnit,
+      displayWhiteSpace: false,
     });
-  } else {
-    if (outputUnit || formatMethod === 'PRECISE') {
-      result = dtTransformResultPrecise(
-        duration,
-        inputUnit,
-        outputUnit,
-        formatMethod,
-      );
-    } else {
-      result = dtTransformResult(duration, inputUnit, formatMethod);
-    }
   }
+  const result =
+    outputUnit || formatMethod === 'PRECISE'
+      ? dtTransformResultPrecise(duration, inputUnit, outputUnit, formatMethod)
+      : dtTransformResult(duration, inputUnit, formatMethod);
 
   // Return NO_DATA when inputUnit is invalid
   if (CONVERSION_FACTORS_TO_MS.get(inputUnit) === undefined) {
@@ -80,10 +67,9 @@ export function formatDuration(
     resultString = `${resultString}${value} ${key} `;
   });
   resultString = resultString.trim();
-  formattedData = {
+  return new DtFormattedValue(inputData, {
     transformedValue: inputData.input,
     displayValue: resultString,
-    displayUnit: undefined,
-  };
-  return new DtFormattedValue(inputData, formattedData);
+    displayWhiteSpace: false,
+  });
 }

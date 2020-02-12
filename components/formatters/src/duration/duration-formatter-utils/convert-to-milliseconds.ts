@@ -25,10 +25,6 @@ import { CONVERSION_FACTORS_TO_MS } from '../duration-formatter-constants';
 export function dtConvertToMilliseconds(
   duration: number,
   inputUnit: DtTimeUnit,
-): number | undefined {
-  if (duration > 0) {
-    let amount = duration;
-    amount = amount * CONVERSION_FACTORS_TO_MS.get(inputUnit)!;
-    return amount;
-  }
+): number {
+  return duration * CONVERSION_FACTORS_TO_MS.get(inputUnit)!;
 }

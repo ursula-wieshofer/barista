@@ -28,3 +28,14 @@
   Format: precise & chaining duration + rate:
   {{ exampleValue | dtDuration: 'PRECISE' | dtRate: 'min' }}
 </p>
+<hr />
+<dt-form-field>
+  <dt-label>Value to be transformed (exampleValue)</dt-label>
+  <input dtInput [(ngModel)]="exampleValue" />
+</dt-form-field>
+<p>DEFAULT (exampleValue | dtDuration): {{ exampleValue | dtDuration }}</p>
+<p>
+  PRECISE + outputUnit (exampleValue | dtDuration: 'PRECISE':'s'):
+  {{ exampleValue | dtDuration: 'PRECISE':'s' }}
+</p>
+<p>CUSTOM (exampleValue | dtDuration: 5): {{ exampleValue | dtDuration: 5 }}</p>

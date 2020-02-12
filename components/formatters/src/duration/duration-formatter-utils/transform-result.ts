@@ -19,6 +19,7 @@ import {
   CONVERSION_FACTORS_TO_MS,
   CONVERSIONUNITS,
   DurationMode,
+  MOVE_COMMA,
 } from '../duration-formatter-constants';
 
 /**
@@ -44,16 +45,17 @@ export function dtTransformResult(
 
   for (const key of conversionFactorKeys) {
     const factor = CONVERSION_FACTORS_TO_MS.get(key)!;
-    let amount;
     if (key === DtTimeUnit.MICROSECOND) {
-      rest = Math.round(rest * 1000000); // handles IEEE floating point number problem
+      rest = Math.round(rest * MOVE_COMMA); // handles IEEE floating point number problem
     }
-    amount = Math.trunc(rest / factor);
+    const amount = Math.trunc(rest / factor);
     if (displayedUnits < unitsToDisplay) {
       if (amount > 0) {
         result.set(key, amount.toString());
+        // Only increase when a unit with a value bigger than 0 exists
         displayedUnits++;
       } else if (displayedUnits > 0) {
+        // Only increase when a unit with a value is already set
         displayedUnits++;
       }
     }
