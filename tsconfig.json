@@ -137,6 +137,7 @@
         "components/show-more/index.ts"
       ],
       "@dynatrace/barista-components/stepper": ["components/stepper/index.ts"],
+      "@dynatrace/barista-components/slider": ["components/slider/index.ts"],
       "@dynatrace/barista-components/switch": ["components/switch/index.ts"],
       "@dynatrace/barista-components/table": ["components/table/index.ts"],
       "@dynatrace/barista-components/tabs": ["components/tabs/index.ts"],
