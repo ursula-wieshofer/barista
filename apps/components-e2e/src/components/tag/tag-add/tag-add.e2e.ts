@@ -15,8 +15,17 @@
  */
 
 import { tagAdd, overlayPane } from './tag-add.po';
+import {
+  resetWindowSizeToDefault,
+  waitForAngular,
+} from 'apps/components-e2e/src/utils';
 
-fixture('Tag Add').page('http://localhost:4200/tag/tag-add');
+fixture('Tag Add')
+  .page('http://localhost:4200/tag/tag-add')
+  .beforeEach(async () => {
+    await resetWindowSizeToDefault();
+    await waitForAngular();
+  });
 
 test('should propagate attribute to overlay', async (testController: TestController) => {
   await testController

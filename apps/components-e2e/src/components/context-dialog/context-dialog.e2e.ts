@@ -22,8 +22,14 @@ import {
 } from './context-dialog.po';
 
 import { getActiveElementText } from '../overlay/overlay.po';
+import { resetWindowSizeToDefault, waitForAngular } from '../../utils';
 
-fixture('Context Dialog').page('http://localhost:4200/context-dialog');
+fixture('Context Dialog')
+  .page('http://localhost:4200/context-dialog')
+  .beforeEach(async () => {
+    await resetWindowSizeToDefault();
+    await waitForAngular();
+  });
 
 test('should open the context dialog when not disabled', async (testController: TestController) => {
   await testController

@@ -15,8 +15,14 @@
  */
 
 import { select, overlayPane } from './select.po';
+import { resetWindowSizeToDefault, waitForAngular } from '../../utils';
 
-fixture('Select').page('http://localhost:4200/select');
+fixture('Select')
+  .page('http://localhost:4200/select')
+  .beforeEach(async () => {
+    await resetWindowSizeToDefault();
+    await waitForAngular();
+  });
 
 test('should propagate attribute to overlay', async (testController: TestController) => {
   await testController

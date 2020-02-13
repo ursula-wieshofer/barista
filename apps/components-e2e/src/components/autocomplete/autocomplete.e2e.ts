@@ -15,8 +15,14 @@
  */
 
 import { autocompleteInput, overlayPane } from './autocomplete.po';
+import { resetWindowSizeToDefault, waitForAngular } from '../../utils';
 
-fixture('Autocomplete').page('http://localhost:4200/autocomplete');
+fixture('Autocomplete')
+  .page('http://localhost:4200/autocomplete')
+  .beforeEach(async () => {
+    await resetWindowSizeToDefault();
+    await waitForAngular();
+  });
 
 test('should propagate attribute to overlay', async (testController: TestController) => {
   await testController
