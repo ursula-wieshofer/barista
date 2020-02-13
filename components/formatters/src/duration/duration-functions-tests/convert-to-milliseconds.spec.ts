@@ -132,7 +132,7 @@ describe('DtDurationFormatter', () => {
       {
         duration: 0,
         inputUnit: DtTimeUnit.NANOSECOND,
-        output: undefined,
+        output: 0,
       },
     ].forEach((testCase: TestCase) => {
       it(`Duration '${testCase.duration}', input unit '${testCase.inputUnit}' should equal to '${testCase.output}'`, () => {

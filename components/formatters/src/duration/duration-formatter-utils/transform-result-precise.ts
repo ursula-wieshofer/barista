@@ -41,8 +41,8 @@ export function dtTransformResultPrecise(
       ? duration
       : dtConvertToMilliseconds(duration, inputUnit);
   return outputUnit !== undefined
-    ? calcResult(amount, formatMethod, outputUnit)
-    : calcResult(amount, formatMethod, inputUnit);
+    ? calcResult(amount!, formatMethod, outputUnit)
+    : calcResult(amount!, formatMethod, inputUnit);
 }
 
 function calcResult(
