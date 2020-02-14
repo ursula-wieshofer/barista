@@ -327,16 +327,16 @@
       }
     },
     "examples-tools": {
-      "root": "tools/examples",
-      "sourceRoot": "tools/examples/src",
+      "root": "tools/examples-tools",
+      "sourceRoot": "tools/examples-tools/src",
       "projectType": "library",
       "architect": {
         "build": {
           "builder": "@nrwl/node:build",
           "options": {
-            "outputPath": "dist/tools/examples",
-            "main": "tools/examples/src/main.ts",
-            "tsConfig": "tools/examples/tsconfig.json"
+            "outputPath": "dist/tools/examples-tools",
+            "main": "tools/examples-tools/src/main.ts",
+            "tsConfig": "tools/examples-tools/tsconfig.json"
           },
           "configurations": {
             "production": {
@@ -355,8 +355,8 @@
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
-            "tsConfig": ["tools/examples/tsconfig.json"],
-            "exclude": ["**/node_modules/**", "!tools/examples/**"]
+            "tsConfig": ["tools/examples-tools/tsconfig.json"],
+            "exclude": ["**/node_modules/**", "!tools/examples-tools/**"]
           }
         }
       }
@@ -1856,14 +1856,6 @@
             "reportFile": "dist/stylelint/report.xml",
             "exclude": ["**/node_modules/**"],
             "files": ["components/form-field/**/*.scss"]
-          }
-        },
-        "test": {
-          "builder": "@nrwl/jest:jest",
-          "options": {
-            "jestConfig": "components/form-field/jest.config.js",
-            "tsConfig": "components/form-field/tsconfig.spec.json",
-            "setupFile": "components/form-field/src/test-setup.ts"
           }
         }
       },

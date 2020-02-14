@@ -38,11 +38,9 @@ import { Platform } from '@angular/cdk/platform';
 import {
   createComponent,
   MockNgZone,
-} from '@dynatrace/barista-components/testing';
-import {
   mockObjectProperty,
   mockGetComputedStyle,
-} from '@dynatrace/barista-components/testing/mock';
+} from '@dynatrace/barista-components/testing';
 
 import { _DtFilterFieldTagData } from '../types';
 import { DtOverlayTrigger } from '@dynatrace/barista-components/overlay';

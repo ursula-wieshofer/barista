@@ -65,7 +65,7 @@
       "tags": ["scope:testing", "type:library"]
     },
     "examples": {
-      "tags": ["type:library"]
+      "tags": ["scope:examples", "type:library"]
     },
     "linting": {
       "tags": ["scope:tooling"]
@@ -132,7 +132,7 @@
       ]
     },
     "alert": {
-      "tags": ["scope:components", "type:library"]
+      "tags": ["scope:components"]
     },
     "autocomplete": {
       "tags": ["scope:components", "type:library"]

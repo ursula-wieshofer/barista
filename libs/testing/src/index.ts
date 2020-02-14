@@ -23,3 +23,4 @@ export * from './lib/mock-ng-zone';
 export * from './lib/request-animation-frame';
 export * from './lib/type-in-element';
 export * from './lib/wrapped-error-message';
+export * from './mock';
