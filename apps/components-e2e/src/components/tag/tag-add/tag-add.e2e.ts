@@ -15,12 +15,10 @@
  */
 
 import { tagAdd, overlayPane } from './tag-add.po';
-import {
-  resetWindowSizeToDefault,
-  waitForAngular,
-} from 'apps/components-e2e/src/utils';
+import { resetWindowSizeToDefault, waitForAngular } from '../../../utils';
 
-fixture('Tag Add')
+fixture
+  .only('Tag Add')
   .page('http://localhost:4200/tag/tag-add')
   .beforeEach(async () => {
     await resetWindowSizeToDefault();
