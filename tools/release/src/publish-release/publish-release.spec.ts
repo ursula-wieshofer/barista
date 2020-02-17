@@ -162,7 +162,7 @@ test('Should throw an error when the changelog could not be parsed for the relea
   }
 });
 
-test('should throw when no circle ci token is provide', async () => {
+test('should throw when no circle ci token is provided', async () => {
   expect.assertions(1);
 
   try {

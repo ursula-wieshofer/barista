@@ -807,9 +807,9 @@ export class DtFlexibleConnectedPositionStrategy implements PositionStrategy {
       return;
     }
 
-    const elements: NodeListOf<
-      HTMLElement
-    > = this._boundingBox!.querySelectorAll(this._transformOriginSelector);
+    const elements: NodeListOf<HTMLElement> = this._boundingBox!.querySelectorAll(
+      this._transformOriginSelector,
+    );
     let xOrigin: 'left' | 'right' | 'center';
     const yOrigin: 'top' | 'bottom' | 'center' = position.overlayY;
 
