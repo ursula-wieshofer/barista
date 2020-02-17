@@ -36,19 +36,16 @@ export function dtTransformResult(
   formatMethod: DurationMode,
 ): Map<DtTimeUnit, string> | undefined {
   const result = new Map<DtTimeUnit, string>();
-  const conversionFactorKeys = Array.from(CONVERSION_FACTORS_TO_MS.keys());
 
   let rest = duration * CONVERSION_FACTORS_TO_MS.get(inputUnit)!;
   let displayedUnits = 0;
   let unitsToDisplay =
     typeof formatMethod === 'number' ? formatMethod : CONVERSIONUNITS;
-
-  for (const key of conversionFactorKeys) {
-    const factor = CONVERSION_FACTORS_TO_MS.get(key)!;
+  for (const key of Array.from(CONVERSION_FACTORS_TO_MS.keys())) {
     if (key === DtTimeUnit.MICROSECOND) {
       rest = Math.round(rest * MOVE_COMMA); // handles IEEE floating point number problem
     }
-    const amount = Math.trunc(rest / factor);
+    const amount = Math.trunc(rest / CONVERSION_FACTORS_TO_MS.get(key)!);
     if (displayedUnits < unitsToDisplay) {
       if (amount > 0) {
         result.set(key, amount.toString());
@@ -59,7 +56,7 @@ export function dtTransformResult(
         displayedUnits++;
       }
     }
-    rest = rest - amount * factor;
+    rest = rest - amount * CONVERSION_FACTORS_TO_MS.get(key)!;
   }
   return result;
 }

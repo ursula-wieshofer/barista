@@ -84,35 +84,32 @@ describe('DtDurationFormatter', () => {
       {
         duration: 1,
         inputUnit: DtTimeUnit.MICROSECOND,
-        isSmallerThanMs: false,
-        output: 1000,
+        output: 0.001,
       },
       {
         duration: 1000,
         inputUnit: DtTimeUnit.MICROSECOND,
-        isSmallerThanMs: false,
-        output: 1000000,
+        output: 1,
       },
       {
         duration: 123.455,
         inputUnit: DtTimeUnit.MICROSECOND,
-        isSmallerThanMs: false,
-        output: 123455,
+        output: 0.123455,
       },
       {
         duration: 1,
         inputUnit: DtTimeUnit.NANOSECOND,
-        output: 1,
+        output: 0.000001,
       },
       {
         duration: 1000000,
         inputUnit: DtTimeUnit.NANOSECOND,
-        output: 1000000,
+        output: 1,
       },
       {
         duration: 123.455,
         inputUnit: DtTimeUnit.NANOSECOND,
-        output: 123.455,
+        output: 0.000123455,
       },
       {
         duration: -123.455,

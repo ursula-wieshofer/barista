@@ -52,16 +52,14 @@ function calcResult(
 ): Map<DtTimeUnit, string> {
   let result = new Map<DtTimeUnit, string>();
   if (formatMethod === 'PRECISE') {
-    const factor = CONVERSION_FACTORS_TO_MS.get(unit)!;
-    amount = amount / factor;
+    amount = amount / CONVERSION_FACTORS_TO_MS.get(unit)!;
     // Need to move the comma since IEEE can't handle floating point numbers very well.
     if (unit === DtTimeUnit.MICROSECOND || unit === DtTimeUnit.NANOSECOND) {
       amount *= MOVE_COMMA;
     }
     result.set(unit, amount.toString());
   } else {
-    const factor = CONVERSION_FACTORS_TO_MS.get(unit)!;
-    amount = Math.trunc(amount / factor);
+    amount = Math.trunc(amount / CONVERSION_FACTORS_TO_MS.get(unit)!);
     amount < 1 ? result.set(unit, '< 1') : result.set(unit, amount.toString());
   }
   return result;

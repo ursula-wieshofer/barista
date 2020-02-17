@@ -143,8 +143,8 @@ consumes a formatMethod which configures how the output is built.
 
 - **'DEFAULT':** will look for the first unit that has a value and will only
   print the next two descending units as long as they have values. The results
-  for each time unit will be rounded to decimal numbers.
-- **'PRECISE':** will only print the unit that it consumed or was set as
+  for each time unit will be rounded to a decimal number.
+- **'PRECISE':** will only print the unit that it consumed or was set as the
   outputUnit. The output value can be real numbers. (e.g. 1.54 s)
 - **Custom/Number(1-n):** will tell the formatter to print a custom amount of
   units.

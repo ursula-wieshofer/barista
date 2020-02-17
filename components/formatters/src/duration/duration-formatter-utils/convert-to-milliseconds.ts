@@ -15,7 +15,10 @@
  */
 
 import { DtTimeUnit } from '../../unit';
-import { CONVERSION_FACTORS_TO_MS } from '../duration-formatter-constants';
+import {
+  CONVERSION_FACTORS_TO_MS,
+  MOVE_COMMA,
+} from '../duration-formatter-constants';
 
 /**
  * Converts any duration to milliseconds
@@ -27,6 +30,14 @@ export function dtConvertToMilliseconds(
   inputUnit: DtTimeUnit,
 ): number | undefined {
   if (duration >= 0) {
-    return duration * CONVERSION_FACTORS_TO_MS.get(inputUnit)!;
+    console.log(
+      duration * CONVERSION_FACTORS_TO_MS.get(inputUnit)! * MOVE_COMMA,
+      inputUnit,
+      duration,
+    );
+    return inputUnit === DtTimeUnit.MICROSECOND ||
+      inputUnit === DtTimeUnit.NANOSECOND
+      ? (duration * CONVERSION_FACTORS_TO_MS.get(inputUnit)!) / MOVE_COMMA
+      : duration * CONVERSION_FACTORS_TO_MS.get(inputUnit)!;
   }
 }
