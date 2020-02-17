@@ -40,6 +40,7 @@ import {
   ViewChild,
   ViewContainerRef,
   ViewEncapsulation,
+  ChangeDetectorRef,
 } from '@angular/core';
 import {
   _addCssClass,
@@ -185,6 +186,7 @@ export class DtChartSelectionArea implements AfterContentInit, OnDestroy {
     private _viewportRuler: ViewportRuler,
     private _platform: Platform,
     private _overlayContainer: OverlayContainer,
+    private _changeDetectorRef: ChangeDetectorRef,
     // tslint:disable-next-line: no-any
     @Inject(DOCUMENT) private _document: any,
     @Optional() private _viewportResizer: DtViewportResizer,
@@ -828,6 +830,7 @@ export class DtChartSelectionArea implements AfterContentInit, OnDestroy {
               ref,
               viewPortOffset,
             );
+            this._changeDetectorRef.markForCheck();
           }
         });
     }
